@@ -13,7 +13,7 @@ require('dotenv').config({ path: '.env' });
  */
 export default defineConfig({
   testDir: './tests',
-  timeout: 150000,
+  //timeout: 150000,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -25,6 +25,14 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [["html"],
   ['list'],
+  [
+      "allure-playwright",
+      {
+        environmentInfo: {
+          node_version: process.version,
+        },
+      },
+    ],
   ['playwright-qase-reporter',
       {
         testops: {
