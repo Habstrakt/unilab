@@ -1,25 +1,40 @@
-import { test, expect } from '@playwright/test';
-import {qase} from "playwright-qase-reporter";
+import {test, expect} from "@playwright/test";
+import { qase } from 'playwright-qase-reporter';
 
-test('has title', async ({ page }) => {
-  qase.id(1);
-  qase.title("has title")
+import { login, openNewTab } from "./utils";
 
-  await page.goto('https://playwright.dev/');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+test("Наличие полей ввода и кнопок для смены пароля", async ({ browser }) => {
+    qase.id(3);
+    qase.title("MIS-3: Наличие полей ввода и кнопок для смены пароля");
 
-test('get started link', async ({ page }) => {
-  qase.id(2);
-  qase.title("get started link");
+    const context = await browser.newContext();
+    const page = await context.newPage();
 
-  await page.goto('https://playwright.dev/');
+    await login(page, "test3_ttt", "uni_987572*msa");
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+    //  Step #4
+    const newTab = await openNewTab(context, page, "#user-menu", "#user-menu-block > ul > li:nth-child(1) > a", "Изменение своего пароля");
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+    const oldPassword = newTab.locator("#id_old_password");
+    const newPassword = newTab.locator("#id_new_password1");
+    const confirmNewPassword = newTab.locator("#id_new_password2");
+
+    // Step #5
+    await expect(oldPassword).toBeVisible();
+
+    // Step #6
+    await expect(newPassword).toBeVisible();
+
+    // Step #7
+    await expect(confirmNewPassword).toBeVisible();
+
+    // Step #8
+    await expect(newTab.locator("#container > form > div.button-place.sticky > div > button.btn-cancel")).toBeVisible();
+
+    // Step #9
+    await expect(newTab.locator("#container > form > div.button-place.sticky > button.btn-ok")).toBeVisible();
+
+    await newTab.close();
+    await page.close();
 });
