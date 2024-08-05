@@ -11,8 +11,9 @@ describe("Убедиться, что на странице смены парол
         const context = await browser.newContext();
         const page = await context.newPage();
 
-        const url1 = "http://10.25.1.88:8005/login";
-        const url2 = "http://vlgwkcontrol.no-ip.org:38190/login/";
+        const url1 = "http://vlgwkcontrol.no-ip.org:38190/login/";
+        const url2 = "http://10.25.1.88:8005/login";
+
         let urlToUse:string;
 
         try {
