@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 // функция для авторизации в МИС
 const login = async (page, username, password) => {
-    await page.goto("http://10.25.1.88:8005/login/");
+    await page.goto("http://vlgwkcontrol.no-ip.org:38190/login/");
 
     await page.locator("#id_username").fill(username);
     await page.locator("#id_password").fill(password)
