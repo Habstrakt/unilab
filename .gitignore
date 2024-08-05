@@ -5,4 +5,5 @@ node_modules/
 /playwright/.cache/
 /allure-reporter/
 /allure-results/
+/unilab/
 .env

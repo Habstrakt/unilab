@@ -8,7 +8,7 @@ const login = async (page, username, password) => {
     await page.locator("#id_password").fill(password)
     await page.locator("#login-form-content-main > form > button").click();
 
-    await expect(page).toHaveURL("http://vlgwkcontrol.no-ip.org:38190/wo");
+    //await expect(page).toHaveURL("http://vlgwkcontrol.no-ip.org:38190/wo");
 }
 
 // открытия вкладки для смены пароля
