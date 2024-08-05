@@ -3,6 +3,11 @@ import { describe } from "node:test";
 import { qase } from 'playwright-qase-reporter';
 import axios from "axios";
 
+test.use({
+    viewport: {width: 1920, height: 1080},
+    locale: "ru-RU"
+});
+
 describe("Убедиться, что на странице смены пароля присутствуют необходимые поля ввода и кнопки для смены пароля.", () => {
     test("Наличие полей ввода и кнопок для смены пароля", async ({browser}) => {
         qase.id(3);
@@ -56,7 +61,9 @@ describe("Убедиться, что на странице смены парол
 
         const newTab = await context.waitForEvent("page");
 
+        // добавить проверку на url еще
         await test.step("Step 4", async() => {
+            await expect(newTab).toHaveURL(/wo\/profile\/view\//);
             await expect(newTab.locator(".header")).toContainText("Изменение своего пароля");
         });
 
