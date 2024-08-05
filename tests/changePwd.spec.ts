@@ -85,9 +85,8 @@ describe("Чек-лист смена пароля пользователя", () 
                 qase.title("Чек-лист смена пароля пользователя");
                 await newTab.locator("#id_new_password1").fill(newPassword);
                 await newTab.locator("#id_new_password2").fill(confirmPassword);
+                await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
             });
-
-            await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
 
             // разлогиниваемся
             await page.locator("#user-menu-block > ul > li:nth-child(4) > a").click();
