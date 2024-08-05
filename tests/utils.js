@@ -1,4 +1,4 @@
-import { expect } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 // функция для авторизации в МИС
 const login = async (page, username, password) => {
@@ -22,8 +22,8 @@ const openNewTab = async (context, page, menuSelector, linkSelector, expectedHea
         await page.locator(linkSelector).click();
     });
 
-    await page.locator(menuSelector).click();
-    await page.locator(linkSelector).click();
+    // await page.locator(menuSelector).click();
+    // await page.locator(linkSelector).click();
 
     const newTab = await context.waitForEvent("page");
 
