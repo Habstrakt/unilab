@@ -45,7 +45,6 @@ describe("Чек-лист смена пароля пользователя", () 
     for(const {title, newPassword, confirmPassword} of newPasswordCases) {
         test(`${title} - ${newPassword}`, async ({browser}) => {
             qase.id(4);
-            qase.title("Чек-лист смена пароля пользователя");
 
             const context = await browser.newContext();
             const page = await context.newPage();
@@ -83,6 +82,7 @@ describe("Чек-лист смена пароля пользователя", () 
             await newTab.locator("#id_old_password").fill("uni_987572*msa");
 
             test.step(`${title}`, async() => {
+                qase.title("Чек-лист смена пароля пользователя");
                 await newTab.locator("#id_new_password1").fill(newPassword);
                 await newTab.locator("#id_new_password2").fill(confirmPassword);
             });
@@ -111,7 +111,7 @@ describe("Чек-лист смена пароля пользователя", () 
             await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
         });
     };
-})
+});
 
 
 // test("7. Введение некорректного текущего пароля", async ({browser}) => {
