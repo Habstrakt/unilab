@@ -45,6 +45,7 @@ describe("Чек-лист смена пароля пользователя", () 
     for(const {title, newPassword, confirmPassword} of newPasswordCases) {
         test(`${title} - ${newPassword}`, async ({browser}) => {
             qase.id(4);
+            qase.title("Чек-лист смена пароля пользователя");
 
             const context = await browser.newContext();
             const page = await context.newPage();
@@ -81,21 +82,21 @@ describe("Чек-лист смена пароля пользователя", () 
 
             await newTab.locator("#id_old_password").fill("uni_987572*msa");
 
-            test.step(`${title}`, async() => {
-                qase.title("Чек-лист смена пароля пользователя");
-                await newTab.locator("#id_new_password1").fill(newPassword);
-                await newTab.locator("#id_new_password2").fill(confirmPassword);
-                await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
-            });
+
+            await newTab.locator("#id_new_password1").fill(newPassword);
+            await newTab.locator("#id_new_password2").fill(confirmPassword);
+            await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
 
             // разлогиниваемся
             await page.locator("#user-menu-block > ul > li:nth-child(4) > a").click();
             await page.locator("#winConfirm-ok-btn").click();
 
-
-            await page.locator("#id_username").fill("test3_ttt");
-            await page.locator("#id_password").fill(newPassword)
-            await page.locator("#login-form-content-main > form > button").click();
+            test.step(`${title}`, async() => {
+                await page.locator("#id_username").fill("test3_ttt");
+                await page.locator("#id_password").fill(newPassword)
+                await page.locator("#login-form-content-main > form > button").click();
+                await expect(page).toHaveURL(/wo\//);
+            });
 
 
             page.locator("#user-menu").click();
