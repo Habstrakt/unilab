@@ -158,10 +158,11 @@ test("7. Введение некорректного текущего парол
 
     const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(1) > td > ul.errorlist > li");
 
-    expect(errorText).toBeVisible();
-    expect(errorText).toHaveText("Ваш старый пароль введен неправильно. Пожалуйста, введите его снова.");
 
-    await page.close();
+    await test.step("Step 7", async() => {
+        await expect(errorText).toBeVisible();
+        await expect(errorText).toHaveText("Ваш старый пароль введен неправильно. Пожалуйста, введите его снова.");
+    });
 });
 
 test("8. Новый пароль из латиницы короче требуемых символов", async ({browser}) => {
@@ -197,7 +198,7 @@ test("8. Новый пароль из латиницы короче требуе
 
     page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
 
-    let newTab = await context.waitForEvent("page");
+    const newTab = await context.waitForEvent("page");
 
     await newTab.locator("#id_old_password").fill("uni_987572*msa");
 
@@ -207,13 +208,12 @@ test("8. Новый пароль из латиницы короче требуе
 
     await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
 
-    const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(1) > td > ul.errorlist > li");
+    const errorText = await newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(1) > td > ul.errorlist > li");
 
-
-    expect(errorText).toBeVisible();
-    expect(errorText).toHaveText("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
-
-    await page.close();
+    await test.step("Step 8", async() => {
+       await  expect(errorText).toBeVisible();
+       await expect(errorText).toHaveText("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
+    });
 });
 
 test("9. Новый пароль из кириллицы короче требуемых символов", async ({browser}) => {
@@ -259,8 +259,10 @@ test("9. Новый пароль из кириллицы короче требу
 
     const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(3) > td > ul > li");
 
-    expect(errorText).toBeVisible();
-    expect(errorText).toHaveText("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
+    test.step("Step 9", async() => {
+        await expect(errorText).toBeVisible();
+        await expect(errorText).toHaveText("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
+    })
 
     await page.close();
 })
@@ -308,11 +310,11 @@ test("10. Новый пароль состоит только из цифр", as
 
     const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(3) > td > ul.errorlist > li");
 
-    expect(errorText).toBeVisible();
-    expect(errorText).toHaveText("Введённый пароль состоит только из цифр.");
-
-    await page.close();
-})
+    await test.step("Step 10", async() => {
+        await expect(errorText).toBeVisible();
+        await expect(errorText).toHaveText("Введённый пароль состоит только из цифр.");
+    });
+});
 
 // test("11. Новый пароль состоит только из спец. символов", async({browser}) => {
 //     const context = await browser.newContext();
