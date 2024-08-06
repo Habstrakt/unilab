@@ -43,7 +43,7 @@ const newPasswordCases = [
 
 describe("Чек-лист смена пароля пользователя", () => {
     for(const {title, newPassword, confirmPassword} of newPasswordCases) {
-        test(`${title} - ${newPassword}`, async ({browser}) => {
+        test(`${title} ${newPassword}`, async ({browser}) => {
             qase.id(4);
             qase.title("Чек-лист смена пароля пользователя");
 
