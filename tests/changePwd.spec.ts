@@ -41,166 +41,278 @@ const newPasswordCases = [
     }
 ];
 
-describe("Чек-лист смена пароля пользователя", () => {
-    for(const {title, newPassword, confirmPassword} of newPasswordCases) {
-        test(`${title} ${newPassword}`, async ({browser}) => {
-            qase.id(4);
-            qase.title("Чек-лист смена пароля пользователя");
+// describe("Чек-лист смена пароля пользователя", () => {
+//     for(const {title, newPassword, confirmPassword} of newPasswordCases) {
+//         test(`${title} ${newPassword}`, async ({browser}) => {
+//             qase.id(4);
+//             qase.title("Чек-лист смена пароля пользователя");
 
-            const context = await browser.newContext();
-            const page = await context.newPage();
+//             const context = await browser.newContext();
+//             const page = await context.newPage();
 
-            const url1 = "http://vlgwkcontrol.no-ip.org:38190/login/";
-            const url2 = "http://10.25.1.88:8005/login";
+//             const url1 = "http://vlgwkcontrol.no-ip.org:38190/login/";
+//             const url2 = "http://10.25.1.88:8005/login";
 
-            let urlToUse:string;
+//             let urlToUse:string;
 
-            try {
-                const response1 = await axios.get(url1);
-                if (response1.status >= 200 && response1.status < 400) {
-                    urlToUse = url1;
-                } else {
-                    throw new Error(`Ошибка: статус-код первого URL: ${response1.status}`);
+//             try {
+//                 const response1 = await axios.get(url1);
+//                 if (response1.status >= 200 && response1.status < 400) {
+//                     urlToUse = url1;
+//                 } else {
+//                     throw new Error(`Ошибка: статус-код первого URL: ${response1.status}`);
+//                 }
+//                 } catch (error) {
+//                     console.error(error);
+//                     urlToUse = url2;
+//                 };
+
+//             await page.goto(urlToUse);
+
+//             await page.locator("#id_username").fill("test3_ttt");
+//             await page.locator("#id_password").fill("uni_987572*msa");
+//             await page.locator("#login-form-content-main > form > button").click();
+
+
+//             page.locator("#user-menu").click();
+
+//             page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
+
+//             let newTab = await context.waitForEvent("page");
+
+//             await newTab.locator("#id_old_password").fill("uni_987572*msa");
+
+
+//             await newTab.locator("#id_new_password1").fill(newPassword);
+//             await newTab.locator("#id_new_password2").fill(confirmPassword);
+//             await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+
+//             await page.locator("#user-menu-block > ul > li:nth-child(4) > a").click();
+//             await page.locator("#winConfirm-ok-btn").click();
+
+//             test.step(`${title}`, async() => {
+//                 await page.locator("#id_username").fill("test3_ttt");
+//                 await page.locator("#id_password").fill(newPassword)
+//                 await page.locator("#login-form-content-main > form > button").click();
+//                 await expect(page).toHaveURL(/wo\//);
+//             });
+
+
+//             page.locator("#user-menu").click();
+
+//             page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
+
+//             newTab = await context.waitForEvent("page");
+
+//             await newTab.locator("#id_old_password").fill(newPassword);
+//             await newTab.locator("#id_new_password1").fill("uni_987572*msa");
+//             await newTab.locator("#id_new_password2").fill("uni_987572*msa");
+//             await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+//         });
+//     };
+// });
+
+
+test("7. Введение некорректного текущего пароля", async ({browser}) => {
+    qase.id(4);
+
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    const url1 = "http://vlgwkcontrol.no-ip.org:38190/login/";
+    const url2 = "http://10.25.1.88:8005/login";
+
+    let urlToUse:string;
+
+    try {
+        const response1 = await axios.get(url1);
+        if (response1.status >= 200 && response1.status < 400) {
+            urlToUse = url1;
+            } else {
+                throw new Error(`Ошибка: статус-код первого URL: ${response1.status}`);
                 }
                 } catch (error) {
                     console.error(error);
                     urlToUse = url2;
                 };
 
-            await page.goto(urlToUse);
+    await page.goto(urlToUse);
 
-            await page.locator("#id_username").fill("test3_ttt");
-            await page.locator("#id_password").fill("uni_987572*msa");
-            await page.locator("#login-form-content-main > form > button").click();
+    await page.locator("#id_username").fill("test3_ttt");
+    await page.locator("#id_password").fill("uni_987572*msa");
+    await page.locator("#login-form-content-main > form > button").click();
 
+    page.locator("#user-menu").click();
 
-            page.locator("#user-menu").click();
+    page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
 
-            page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
+    let newTab = await context.waitForEvent("page");
 
-            let newTab = await context.waitForEvent("page");
+    await newTab.locator("#id_old_password").fill("uni_987572*msa");
 
-            await newTab.locator("#id_old_password").fill("uni_987572*msa");
+    await newTab.locator("#id_old_password").fill("uni_987572");
+    await newTab.locator("#id_new_password1").fill("unilabwork");
+    await newTab.locator("#id_new_password2").fill("unilabwork");
 
+    await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
 
-            await newTab.locator("#id_new_password1").fill(newPassword);
-            await newTab.locator("#id_new_password2").fill(confirmPassword);
-            await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+    const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(1) > td > ul.errorlist > li");
 
-            // разлогиниваемся
-            await page.locator("#user-menu-block > ul > li:nth-child(4) > a").click();
-            await page.locator("#winConfirm-ok-btn").click();
+    expect(errorText).toBeVisible();
+    expect(errorText).toHaveText("Ваш старый пароль введен неправильно. Пожалуйста, введите его снова.");
 
-            test.step(`${title}`, async() => {
-                await page.locator("#id_username").fill("test3_ttt");
-                await page.locator("#id_password").fill(newPassword)
-                await page.locator("#login-form-content-main > form > button").click();
-                await expect(page).toHaveURL(/wo\//);
-            });
-
-
-            page.locator("#user-menu").click();
-
-            page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
-
-            newTab = await context.waitForEvent("page");
-
-            await newTab.locator("#id_old_password").fill(newPassword);
-            await newTab.locator("#id_new_password1").fill("uni_987572*msa");
-            await newTab.locator("#id_new_password2").fill("uni_987572*msa");
-            await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
-        });
-    };
+    await page.close();
 });
 
+test("8. Новый пароль из латиницы короче требуемых символов", async ({browser}) => {
+    qase.id(4);
 
-// test("7. Введение некорректного текущего пароля", async ({browser}) => {
-//     const context = await browser.newContext();
-//     const page = await context.newPage();
+    const context = await browser.newContext();
+    const page = await context.newPage();
 
-//     await login(page, "test3_ttt", "uni_987572*msa");
+    const url1 = "http://vlgwkcontrol.no-ip.org:38190/login/";
+    const url2 = "http://10.25.1.88:8005/login";
 
-//     const newTab = await openNewTab(context, page, "#user-menu", "#user-menu-block > ul > li:nth-child(1) > a", "Изменение своего пароля");
+    let urlToUse:string;
 
-//     await newTab.locator("#id_old_password").fill("uni_987572");
-//     await newTab.locator("#id_new_password1").fill("unilabwork");
-//     await newTab.locator("#id_new_password2").fill("unilabwork");
+    try {
+        const response1 = await axios.get(url1);
+        if (response1.status >= 200 && response1.status < 400) {
+            urlToUse = url1;
+            } else {
+                throw new Error(`Ошибка: статус-код первого URL: ${response1.status}`);
+                }
+                } catch (error) {
+                    console.error(error);
+                    urlToUse = url2;
+                };
 
-//     await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+    await page.goto(urlToUse);
 
-//     const errorText = await newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(1) > td > ul.errorlist > li");
+    await page.locator("#id_username").fill("test3_ttt");
+    await page.locator("#id_password").fill("uni_987572*msa");
+    await page.locator("#login-form-content-main > form > button").click();
 
-//     expect(errorText).toBeVisible();
-//     expect(await errorText.textContent()).toEqual("Ваш старый пароль введен неправильно. Пожалуйста, введите его снова.");
+    page.locator("#user-menu").click();
 
-//     await page.close();
-// });
+    page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
 
-// test("8. Новый пароль из латиницы короче требуемых символов", async ({browser}) => {
-//     const context = await browser.newContext();
-//     const page = await context.newPage();
+    let newTab = await context.waitForEvent("page");
 
-//     await login(page, "test3_ttt", "uni_987572*msa");
+    await newTab.locator("#id_old_password").fill("uni_987572*msa");
 
-//     const newTab = await openNewTab(context, page, "#user-menu", "#user-menu-block > ul > li:nth-child(1) > a", "Изменение своего пароля");
+    await newTab.locator("#id_old_password").fill("uni_987572*msa");
+    await newTab.locator("#id_new_password1").fill("unilab8");
+    await newTab.locator("#id_new_password2").fill("unilab8");
 
-//     await newTab.locator("#id_old_password").fill("uni_987572*msa");
-//     await newTab.locator("#id_new_password1").fill("unilab8");
-//     await newTab.locator("#id_new_password2").fill("unilab8");
+    await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
 
-//     await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+    const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(1) > td > ul.errorlist > li");
 
-//     const errorText = await newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(3) > td > ul.errorlist > li");
 
-//     expect(errorText).toBeVisible();
-//     expect(await errorText.textContent()).toEqual("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
+    expect(errorText).toBeVisible();
+    expect(errorText).toHaveText("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
 
-//     await page.close();
-// });
+    await page.close();
+});
 
-// test("9. Новый пароль из кириллицы короче требуемых символов", async ({browser}) => {
-//     const context = await browser.newContext();
-//     const page = await context.newPage();
+test("9. Новый пароль из кириллицы короче требуемых символов", async ({browser}) => {
+    qase.id(4);
 
-//     await login(page, "test3_ttt", "uni_987572*msa");
+    const context = await browser.newContext();
+    const page = await context.newPage();
 
-//     const newTab = await openNewTab(context, page, "#user-menu", "#user-menu-block > ul > li:nth-child(1) > a", "Изменение своего пароля");
+    const url1 = "http://vlgwkcontrol.no-ip.org:38190/login/";
+    const url2 = "http://10.25.1.88:8005/login";
 
-//     await newTab.locator("#id_old_password").fill("uni_987572*msa");
-//     await newTab.locator("#id_new_password1").fill("юнилаб8");
-//     await newTab.locator("#id_new_password2").fill("юнилаб8");
+    let urlToUse:string;
 
-//     await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+    try {
+        const response1 = await axios.get(url1);
+        if (response1.status >= 200 && response1.status < 400) {
+            urlToUse = url1;
+            } else {
+                throw new Error(`Ошибка: статус-код первого URL: ${response1.status}`);
+                }
+        } catch (error) {
+            console.error(error);
+            urlToUse = url2;
+        };
 
-//     const errorText = await newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(3) > td > ul.errorlist > li");
+    await page.goto(urlToUse);
 
-//     expect(errorText).toBeVisible();
-//     expect(await errorText.textContent()).toEqual("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
+    await page.locator("#id_username").fill("test3_ttt");
+    await page.locator("#id_password").fill("uni_987572*msa");
+    await page.locator("#login-form-content-main > form > button").click();
 
-//     await page.close();
-// })
+    page.locator("#user-menu").click();
 
-// test("10. Новый пароль состоит только из цифр", async({browser}) => {
-//     const context = await browser.newContext();
-//     const page = await context.newPage();
+    page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
 
-//     await login(page, "test3_ttt", "uni_987572*msa");
+    const newTab = await context.waitForEvent("page");
 
-//     const newTab = await openNewTab(context, page, "#user-menu", "#user-menu-block > ul > li:nth-child(1) > a", "Изменение своего пароля");
+    await newTab.locator("#id_old_password").fill("uni_987572*msa");
+    await newTab.locator("#id_new_password1").fill("юнилаб8");
+    await newTab.locator("#id_new_password2").fill("юнилаб8");
 
-//     await newTab.locator("#id_old_password").fill("uni_987572*msa");
-//     await newTab.locator("#id_new_password1").fill("115007115");
-//     await newTab.locator("#id_new_password2").fill("115007115");
+    await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
 
-//     await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+    const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(3) > td > ul > li");
 
-//     const errorText = await newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(3) > td > ul.errorlist > li");
+    expect(errorText).toBeVisible();
+    expect(errorText).toHaveText("Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов.");
 
-//     expect(errorText).toBeVisible();
-//     expect(await errorText.textContent()).toEqual("Введённый пароль состоит только из цифр.");
+    await page.close();
+})
 
-//     await page.close();
-// })
+test("10. Новый пароль состоит только из цифр", async({browser}) => {
+    qase.id(4);
+
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    const url1 = "http://vlgwkcontrol.no-ip.org:38190/login/";
+    const url2 = "http://10.25.1.88:8005/login";
+
+    let urlToUse:string;
+
+    try {
+        const response1 = await axios.get(url1);
+        if (response1.status >= 200 && response1.status < 400) {
+            urlToUse = url1;
+            } else {
+                throw new Error(`Ошибка: статус-код первого URL: ${response1.status}`);
+                }
+        } catch (error) {
+            console.error(error);
+            urlToUse = url2;
+        };
+
+    await page.goto(urlToUse);
+
+    await page.locator("#id_username").fill("test3_ttt");
+    await page.locator("#id_password").fill("uni_987572*msa");
+    await page.locator("#login-form-content-main > form > button").click();
+
+    page.locator("#user-menu").click();
+
+    page.locator("#user-menu-block > ul > li:nth-child(1) > a").click();
+
+    let newTab = await context.waitForEvent("page");
+
+    await newTab.locator("#id_old_password").fill("uni_987572*msa");
+    await newTab.locator("#id_new_password1").fill("115007115");
+    await newTab.locator("#id_new_password2").fill("115007115");
+
+    await newTab.locator('#container > form > div.button-place.sticky > button.btn-ok').click();
+
+    const errorText = newTab.locator("#container > form > div.fields > div > div > table > tbody > tr:nth-child(3) > td > ul.errorlist > li");
+
+    expect(errorText).toBeVisible();
+    expect(errorText).toHaveText("Введённый пароль состоит только из цифр.");
+
+    await page.close();
+})
 
 // test("11. Новый пароль состоит только из спец. символов", async({browser}) => {
 //     const context = await browser.newContext();
