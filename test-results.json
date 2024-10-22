@@ -1,0 +1,227 @@
+{
+  "config": {
+    "configFile": "d:\\pw\\playwright.config.ts",
+    "rootDir": "d:/pw/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 15000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "d:/pw/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "setup",
+        "name": "setup",
+        "testDir": "d:/pw/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.setup.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "d:/pw/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "tests logged in",
+        "name": "tests logged in",
+        "testDir": "d:/pw/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "UI/*"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "d:/pw/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "tests change password",
+        "name": "tests change password",
+        "testDir": "d:/pw/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "Functions/*"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "d:/pw/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "unilab",
+        "name": "unilab",
+        "testDir": "d:/pw/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "unilab/*"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.46.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "login.setup.ts",
+      "file": "login.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "авторизация в мис",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "status": "passed",
+                  "duration": 9738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2024-09-26T03:22:20.906Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "deed6908e1ee4c16d23d-54d8f527577384d95b44",
+          "file": "login.setup.ts",
+          "line": 7,
+          "column": 6
+        }
+      ]
+    },
+    {
+      "title": "UI\\test-1.spec.ts",
+      "file": "UI/test-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Наличие полей ввода и кнопок для смены пароля",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "tests logged in",
+              "projectName": "tests logged in",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "status": "passed",
+                  "duration": 3706,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Step 2",
+                      "duration": 157
+                    },
+                    {
+                      "title": "Step 3",
+                      "duration": 135
+                    },
+                    {
+                      "title": "Step 4",
+                      "duration": 196
+                    },
+                    {
+                      "title": "Step 5",
+                      "duration": 10
+                    },
+                    {
+                      "title": "Step 6",
+                      "duration": 14
+                    },
+                    {
+                      "title": "Step 7",
+                      "duration": 20
+                    },
+                    {
+                      "title": "Step 8 ",
+                      "duration": 14
+                    },
+                    {
+                      "title": "Step 9",
+                      "duration": 12
+                    }
+                  ],
+                  "startTime": "2024-09-26T03:22:32.383Z",
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "84ef04c6cf1621aa3aec-5ca08ce82be741dfb6d5",
+          "file": "UI/test-1.spec.ts",
+          "line": 32,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2024-09-26T03:22:18.668Z",
+    "duration": 17530.627000000328,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,4 +1,4 @@
-const config = {
+export const config = {
   baseURL: "http://10.25.1.88:8005",
   credentials: {
     username: "test3_ttt",
@@ -21,5 +21,3 @@ const config = {
     changePasswordHeader: "Изменение своего пароля"
   }
 };
-
-module.exports = config;
