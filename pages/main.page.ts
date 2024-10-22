@@ -37,7 +37,7 @@ export class Header {
 		this.headerSearchInput = page.locator(".header__search");
 		this.selectCity = page.locator(".select-city");
 		this.searchCityInput = page.locator("#searchCityInput");
-		this.headerCityLink = page.locator("body > header > div.header__inner > button.header__city-link.city-link.icon-before.btn-reset.grin-hover")
+		this.headerCityLink = page.locator("body > header > div.header__inner > button.header__city-link.city-link.icon-before.btn-reset.grin-hover");
 
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.navBarDropDown = page.getByRole("button", { name: "Важно и полезно" });
