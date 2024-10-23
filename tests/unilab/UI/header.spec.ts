@@ -1,52 +1,35 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { Header } from '../../../pages/main.page';
+import { test } from "../../../fixtures/headerFixture"
 
 test.use({
 	locale: "ru-RU",
 	geolocation: {latitude: 50.272796, longitude: 127.526943},
 	permissions: ['geolocation'],
 });
-test("Изменение шапки при скролле", async({page}) => {
-	const header = new Header(page);
 
-	await header.goToUrl();
-	await header.closePopUps();
+test("Изменение шапки при скролле", async({page, setupHeader}) => {
 	await page.mouse.wheel(0, 500);
 	await expect(page.locator("body")).toHaveClass(/js-scroll/);
 });
 
-test("Открытие бургер-меню в мобильной версии", async ({page}) => {
-	const header = new Header(page);
-
-	await header.goToUrl();
-	await header.closePopUps();
-
+test("Открытие бургер-меню в мобильной версии", async ({page, setupHeader}) => {
+	const header = setupHeader;
 	await header.burgerMenuBtn.tap();
-	await header.navBarDropDown.tap();
-
-	await expect(page.getByRole('link', { name: 'Важно и полезно' })).toHaveClass(/show/);
+	await expect(page.locator("#headerBurgerBtn")).toHaveClass(/burger_open/);
 });
 
-test("Закрытие бургер-меню в мобильной версии", async({page}) => {
-	const header = new Header(page);
-
-	await header.goToUrl();
-	await header.closePopUps();
+test("Закрытие бургер-меню в мобильной версии", async({page, setupHeader}) => {
+	const header = setupHeader;
 
 	await header.burgerMenuBtn.tap();
-	await header.navBarDropDown.tap();
-
-	await expect(page.getByRole('button', { name: 'Важно и полезно' })).toHaveClass(/show/);
-
-	await header.navBarDropDown.tap();
-	await expect(page.getByRole('button', { name: 'Важно и полезно' })).not.toHaveClass(/show/);
+	await expect(page.locator("#headerBurgerBtn")).toHaveClass(/burger_open/);
+	await header.burgerMenuBtn.tap();
+	await expect(page.locator("#headerBurgerBtn")).not.toHaveClass(/burger_open/);
 });
 
-test("Работа переключателя темной/светлой версии в бургер-меню в мобильной версии", async({page}) => {
-	const header = new Header(page);
-
-	await header.goToUrl();
-	await header.closePopUps();
+test("Работа переключателя темной/светлой версии в бургер-меню в мобильной версии", async({page, setupHeader}) => {
+	const header = setupHeader;
 
 	await header.burgerMenuBtn.tap();
 
@@ -57,14 +40,11 @@ test("Работа переключателя темной/светлой вер
 	await expect(page.locator("body")).not.toHaveClass(/theme-dark/);
 });
 
-test("Скрытие попапа при клике на оверлей", async({page}) => {
-	const header = new Header(page);
-
-	await header.goToUrl();
-	await header.closePopUps();
-	await header.blindVersionPanel.click();
+test.only("Скрытие попапа при клике на оверлей", async({page, setupHeader}) => {
+	const header = setupHeader;
 
 	await header.blindPopUp.click();
+	await header.blindVersionPanel.click();
 	await expect(page.locator("#blindVersionPanel")).toHaveClass(/show/);
 	await header.overlay.click();
 	await expect(page.locator("#blindVersionPanel")).not.toHaveClass(/show/)
@@ -133,8 +113,21 @@ test("Отсутствие результата поиска", async({page}) => 
 
 test("Сброс результатов поиска города при закрытии попапа выбора города", async({page}) => {
 	const header = new Header(page);
+	await header.goToUrl();
 
+	await header.headerCityLink.click();
+	await header.searchCityInput.fill("Благовещенск");
+	await page.locator("#selectCity > div.popup-header > button").click();
+	await header.headerCityLink.click();
 
+	await expect(header.searchCityInput).not.toContainText("Благовещенск");
 });
 
+test("Отображение меню Для слабовидящих для десктопной версии", async({page}) => {
+	const header = new Header(page);
+	await header.goToUrl();
 
+	await header.blindPopUp.click();
+
+	await expect(header.blindVersionPanel).toBeVisible();
+});

@@ -15,7 +15,7 @@ export class Header {
 	readonly headerSearchInput: Locator;
 	readonly selectCity: Locator;
 	readonly searchCityInput: Locator;
-	readonly headerCityLink: Locator; 
+	readonly headerCityLink: Locator;
 
 	readonly burgerMenuBtn: Locator;
 	readonly navBarDropDown: Locator;
