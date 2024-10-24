@@ -155,11 +155,20 @@ test("сокрытие попапа при количестве введенны
 	await expect(page.locator(".header__search-result")).not.toHaveClass(/header__search-result_show/);
 });
 
-test.only("Сокрытие попапа результата поиска при клике во вне попапа", async({page, setupHeader}) => {
+test("Сокрытие попапа результата поиска при клике во вне попапа", async({page, setupHeader}) => {
 	const header = setupHeader;
 
 	await page.locator("#searchOnSite").fill("ана");
 	await expect(page.locator(".header__search-result")).toHaveClass(/header__search-result_show/);
-	await page.locator(".header").click();
+	await page.mouse.click(100, 0);
 	await expect(page.locator(".header__search-result")).not.toHaveClass(/header__search-result_show/);
+});
+
+test.only("Переход на страницу результата поиска при нажатии клавиши Enter", async({page, setupHeader}) => {
+	const header = setupHeader;
+
+	await page.locator("#searchOnSite").fill("анализ");
+	await page.keyboard.press("Enter");
+
+	await expect(page).toHaveURL(/.*search/);
 });
