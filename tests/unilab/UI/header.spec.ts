@@ -5,7 +5,7 @@ import { test } from "../../../fixtures/headerFixture"
 test.use({
 	locale: "ru-RU",
 	geolocation: {latitude: 50.272796, longitude: 127.526943},
-	permissions: ['geolocation'],
+	permissions: ['geolocation', "clipboard-read"],
 });
 
 test("Изменение шапки при скролле", async({page, setupHeader}) => {
@@ -65,8 +65,8 @@ test("Анимация изменения ширины поля ввода по�
 	await header.headerSearchInput.click()
 	await expect(page.locator(".header__search")).toHaveCSS("max-width", "100%");
 });
-//	нужно сделать!!!!
-// test("Анимация изменения ширины поля ввода поиска при фокусе в мобильной версии версии", async({page}) => {
+// 	нужно сделать!!!!
+// test("Анимация изменения ширины поля ввода поиска при фокусе в мобильной версии", async({page}) => {
 // 	const header = new Header(page);
 
 // 	await header.goToUrl();
@@ -101,7 +101,7 @@ test("Поиск города", async ({page, setupHeader}) => {
 	await expect(page.locator("[data-slag-city='khabarovsk']")).toContainText("Хабаровск");
 });
 
-test("Отсутствие результата поиска", async({page, setupHeader}) => {
+test("Отсутствие результата поиска города", async({page, setupHeader}) => {
 	const header = setupHeader;
 
 	await header.headerCityLink.click();
@@ -128,4 +128,38 @@ test("Отображение меню Для слабовидящих для д�
 	await header.blindPopUp.click();
 
 	await expect(header.blindVersionPanel).toBeVisible();
+});
+
+test("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({page, setupHeader}) => {
+	const header = setupHeader;
+	await page.locator("#searchOnSite").fill("ана");
+
+	await expect(page.locator(".header__search-result")).toHaveClass(/header__search-result_show/);
+	await expect(header.headerSearchResultItem.first()).toBeEnabled();
+});
+
+test("негативное Отображение попапа результатов поиска", async({page, setupHeader}) => {
+	const header = setupHeader;
+
+	await page.locator("#searchOnSite").fill("fyf");
+	await expect(page.locator(".header__search-result")).toHaveClass(/header__search-result_show/);
+	await expect(page.locator(".search-result__no-result")).toBeVisible()
+});
+
+test("сокрытие попапа при количестве введенных символов меньше трех", async({page, setupHeader}) => {
+	const header = setupHeader;
+
+	await page.locator("#searchOnSite").fill("ана");
+	await expect(page.locator(".header__search-result")).toHaveClass(/header__search-result_show/);
+	await page.locator("#searchOnSite").fill("ан");
+	await expect(page.locator(".header__search-result")).not.toHaveClass(/header__search-result_show/);
+});
+
+test.only("Сокрытие попапа результата поиска при клике во вне попапа", async({page, setupHeader}) => {
+	const header = setupHeader;
+
+	await page.locator("#searchOnSite").fill("ана");
+	await expect(page.locator(".header__search-result")).toHaveClass(/header__search-result_show/);
+	await page.locator(".header").click();
+	await expect(page.locator(".header__search-result")).not.toHaveClass(/header__search-result_show/);
 });

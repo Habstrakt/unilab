@@ -13,6 +13,8 @@ export class Header {
 	readonly blindVersionPanel: Locator;
 	readonly overlay: Locator;
 	readonly headerSearchInput: Locator;
+	readonly headerSearchResult: Locator;
+	readonly headerSearchResultItem: Locator;
 	readonly selectCity: Locator;
 	readonly searchCityInput: Locator;
 	readonly headerCityLink: Locator;
@@ -35,6 +37,8 @@ export class Header {
 		this.blindVersionPanel = page.locator("#blindVersionPanel")
 		this.overlay = page.locator("#overlay");
 		this.headerSearchInput = page.locator(".header__search");
+		this.headerSearchResult = page.locator(".header__search-result");
+		this.headerSearchResultItem = page.locator(".search-result__item");
 		this.selectCity = page.locator(".select-city");
 		this.searchCityInput = page.locator("#searchCityInput");
 		this.headerCityLink = page.locator("body > header > div.header__inner > button.header__city-link.city-link.icon-before.btn-reset.grin-hover");
@@ -51,6 +55,6 @@ export class Header {
 	async closePopUps() {
 		await this.btnNo.click();
 		await this.closePopUpBtn.click();
-		//await this.btnCookieAccept.click();
+		await this.btnCookieAccept.click();
 	};
 };
