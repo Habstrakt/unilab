@@ -1,6 +1,6 @@
 import {type Page, type Locator} from "@playwright/test";
 
-export class Header {
+export class PageElement {
   readonly page: Page;
   readonly bodyElement: Locator;
   readonly promoSlider: Locator;
@@ -18,6 +18,7 @@ export class Header {
 	readonly selectCity: Locator;
 	readonly searchCityInput: Locator;
 	readonly headerCityLink: Locator;
+	readonly upBtn: Locator;
 
 	readonly burgerMenuBtn: Locator;
 	readonly navBarDropDown: Locator;
@@ -42,6 +43,7 @@ export class Header {
 		this.selectCity = page.locator(".select-city");
 		this.searchCityInput = page.locator("#searchCityInput");
 		this.headerCityLink = page.locator("body > header > div.header__inner > button.header__city-link.city-link.icon-before.btn-reset.grin-hover");
+		this.upBtn = page.locator(".up-button");
 
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.navBarDropDown = page.getByRole("button", { name: "Важно и полезно" });
