@@ -1,11 +1,12 @@
 import { expect } from '@playwright/test';
 import { test } from "../../../../fixtures/Fixture"
 
-test.only("Работа аккордеона в футтере в мобильной версии", async({page, navigateAndInitialize}) => {
-	const navItems = await page.locator(".footer__nav-item").all();
+test("Работа аккордеона в футтере в мобильной версии", async({page, navigateAndInitialize}) => {
+	const navItemsTitle = await page.locator(".footer__nav-title").all();
+	const navItems = page.locator(".footer__nav-item");
 
-	const textContents = await Promise.all(
-		navItems.map(async (item) => await item.textContent())
-	);
-	console.log(textContents);
+	for(const [i, navTitle] of navItemsTitle.entries()) {
+		await navTitle.click()
+		await expect(navItems.nth(i)).toHaveClass(/open/);
+	};
 });

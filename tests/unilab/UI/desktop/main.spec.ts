@@ -16,3 +16,12 @@ test("Кнопка “вернуться наверх страницы” поя
 	await button.upBtn.waitFor();
 	expect(button.upBtn).toBeVisible();
 });
+
+test.only("загрузка изображение слайдов", async({page, navigateAndInitialize}) => {
+	const imgs = page.locator(".brd-rd16").all();
+
+	for(const [i, img] of (await imgs).entries()) {
+		await expect(img).toHaveAttribute("src");
+	}
+	//console.log(await img);
+});
