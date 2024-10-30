@@ -51,7 +51,7 @@ export class PageElement {
   };
 
 	async goToUrl() {
-		await this.page.goto("https://dev.unilab.su/", {waitUntil: "domcontentloaded"});
+		await this.page.goto("https://unilab.su/", {waitUntil: "domcontentloaded"});
 	};
 
 	async closePopUps() {
