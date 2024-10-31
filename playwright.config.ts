@@ -41,26 +41,6 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: "setup",
-    //   testMatch: "**/*.setup.ts",
-    // },
-    // {
-    //   name: "tests logged in",
-    //   testMatch: "UI/*",
-    //   dependencies: ["setup"],
-    //   use: {
-    //     storageState: STORAGE_STATE
-    //   }
-    // },
-    // {
-    //   name: "tests change password",
-    //   testMatch: "Functions/*",
-    // },
-    // {
-    //   name: "unilab",
-    //   testMatch: "/",
-    // }
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'],

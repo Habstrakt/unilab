@@ -21,7 +21,7 @@ test("загрузка изображение слайдов", async({page, navi
 	const imgs = page.locator(".brd-rd16").all();
 
 	for(const [i, img] of (await imgs).entries()) {
-		await expect(await img.getAttribute("src")).toContain("/media/images");
+		expect(await img.getAttribute("src")).toContain("/media/images");
 	}
 });
 
@@ -106,6 +106,6 @@ test("Работа кнопки 'в корзину' внутри карточк�
 	await expect(page.locator(".service-item__toast")).toBeVisible();
 });
 
-// test("Работа кнопки 'в корзину' на странице результатов поиска", async({page, navigateAndInitialize}) => {
+// test("Работа кнопки 'в корзину' на ", async({page, navigateAndInitialize}) => {
 // 	await page.locator("#searchOnSite").fill("")
 // });

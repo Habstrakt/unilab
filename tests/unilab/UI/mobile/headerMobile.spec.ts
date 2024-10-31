@@ -7,14 +7,15 @@ test.use({
 	permissions: ['geolocation'],
 });
 
-test("Открытие бургер-меню в мобильной версии", async ({page, navigateAndInitialize}) => {
-	const header = navigateAndInitialize;
+test("Открытие бургер-меню в мобильной версии", async ({page, headerInitialize}) => {
+	const header = headerInitialize;
+
 	await header.burgerMenuBtn.tap();
 	await expect(page.locator("#headerBurgerBtn")).toHaveClass(/burger_open/);
 });
 
-test("Закрытие бургер-меню в мобильной версии", async({page, navigateAndInitialize}) => {
-	const header = navigateAndInitialize;
+test("Закрытие бургер-меню в мобильной версии", async({page, headerInitialize}) => {
+	const header = headerInitialize;
 
 	await header.burgerMenuBtn.tap();
 	await expect(page.locator("#headerBurgerBtn")).toHaveClass(/burger_open/);
@@ -22,27 +23,26 @@ test("Закрытие бургер-меню в мобильной версии"
 	await expect(page.locator("#headerBurgerBtn")).not.toHaveClass(/burger_open/);
 });
 
-test("Работа переключателя темной/светлой версии в бургер-меню в мобильной версии", async({page, navigateAndInitialize}) => {
-	const header = navigateAndInitialize;
+test("Работа переключателя темной/светлой версии в бургер-меню в мобильной версии", async({page, headerInitialize}) => {
+	const header = headerInitialize;
 
 	await header.burgerMenuBtn.tap();
-
 	await header.themeSwitcher.tap();
 	await expect(page.locator("body")).toHaveClass(/theme-dark/);
-
 	await header.themeSwitcher.tap();
 	await expect(page.locator("body")).not.toHaveClass(/theme-dark/);
 });
 
-test("Отсутствие скролла страници при открытом бургер-меню в мобильной версии", async({page, navigateAndInitialize}) => {
-	const header = navigateAndInitialize
+test("Отсутствие скролла страници при открытом бургер-меню в мобильной версии", async({page, headerInitialize}) => {
+	const header = headerInitialize
 
 	await header.burgerMenuBtn.tap();
 	await expect(page.locator("#navbarScroll")).not.toHaveClass(/navbar_scrollable/);
 });
 
-test("Анимация изменения ширины поля ввода поиска при фокусе в мобильной версии", async({page, navigateAndInitialize}) => {
-	const popUpCity = navigateAndInitialize;
+test("Анимация изменения ширины поля ввода поиска при фокусе в мобильной версии", async({page, headerInitialize}) => {
+	const popUpCity = headerInitialize;
+
 	await popUpCity.closePopUps();
 	await expect(page.locator(".search")).toHaveCSS("max-width", "100%");
 	await page.mouse.wheel(0, 500);
