@@ -5,12 +5,14 @@ export class BasePage {
   readonly btnNo: Locator;
   readonly closePopUpBtn: Locator;
   readonly btnCookieAccept: Locator;
+  readonly overlay: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.btnNo = page.locator(".btn-no-js");
     this.closePopUpBtn = page.getByRole('button', { name: 'Закрыть' });
     this.btnCookieAccept = page.locator("#btnCookieAccept");
+    this.overlay = page.locator("#overlay");
   }
 
   async goToUrl() {
@@ -22,4 +24,4 @@ export class BasePage {
 		await this.closePopUpBtn.click();
 		await this.btnCookieAccept.click();
 	};
-}
+};

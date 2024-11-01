@@ -3,12 +3,12 @@ import { Header } from "../pages/header.component";
 import {test as baseTest} from "@playwright/test";
 
 interface Fixtures {
-    navigateAndInitialize: MainPage;
+    mainPageInitialize: MainPage;
     headerInitialize: Header
 };
 
 export const test = baseTest.extend<Fixtures>({
-    navigateAndInitialize: async({page}, use) => {
+    mainPageInitialize: async({page}, use) => {
         const pageElement = new MainPage(page);
         await pageElement.goToUrl();
         await use(pageElement);
