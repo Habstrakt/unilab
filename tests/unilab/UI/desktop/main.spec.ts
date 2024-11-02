@@ -26,7 +26,7 @@ test("загрузка изображение слайдов", async({mainPageIn
 	};
 });
 
-test.only("кнопки переключение слайдов на главной странице", async({mainPageInitialize}) => {
+test("кнопки переключение слайдов на главной странице", async({mainPageInitialize}) => {
 	const buttons = mainPageInitialize;
 	await expect(buttons.btnPrev).toHaveClass(/swiper-button-disabled/);
 	await expect(buttons.btnNext).not.toHaveClass(/swiper-button-disabled/);
@@ -34,54 +34,41 @@ test.only("кнопки переключение слайдов на главн�
 	await expect(buttons.btnNext).toHaveClass(/swiper-button-disabled/);
 });
 
-test("Подсчет количества введенных символов в поле ввода текста оставить отзыв", async({page, mainPageInitialize}) => {
-	await page.getByRole("button", {name: "Важно и полезно"}).click();
-	await page.locator('#navbarScroll').getByRole("link", { name: "Оставить отзыв" }).click();
-
-	const textArea = page.locator("#id_visitor_message");
-	const count = page.locator(".visitor-message__char-count");
+test("Подсчет количества введенных символов в поле ввода текста оставить отзыв", async({mainPageInitialize}) => {
+	const resourcesMainPage = mainPageInitialize;
 	const text = "Пример текста для проверки подсчета символов";
 
-	await textArea.fill(text);
-	const charCount = text.length;
-	const charCountAttr = await page.locator("p[data-char-count]").getAttribute("data-char-count");
-
-	expect(await page.locator("p[data-char-count]").getAttribute("data-char-count")).toBe(`${text.length}/3000`);
+	resourcesMainPage.openFeedBack();
+	await resourcesMainPage.textArea.fill(text);
+	expect(await resourcesMainPage.charCountAttr.getAttribute("data-char-count")).toBe(`${text.length}/3000`);
 });
 
-test("Подсчет количества введенных символов в поле ввода текста вопросу доктору", async({page, mainPageInitialize}) => {
-	await page.getByRole("button", {name: "Важно и полезно"}).click();
-	await page.locator('#navbarScroll').getByRole("link", { name: "Скажите, доктор" }).click();
-	await page.getByRole('link', { name: 'форму' }).click();
-
-	const textArea = page.locator("#id_visitor_message");
+test("Подсчет количества введенных символов в поле ввода текста вопросу доктору", async({mainPageInitialize}) => {
+	const resourcesMainPage = mainPageInitialize;
 	const text = "Пример текста для проверки подсчета символов";
-
-	await textArea.fill(text);
-
-	expect(await page.locator(".visitor-message__char-count").getAttribute("data-char-count")).toBe(`${text.length}/3000`);
+	resourcesMainPage.openQuestionDoctor();
+	await resourcesMainPage.textArea.fill(text);
+	expect(await resourcesMainPage.charCountAttr.getAttribute("data-char-count")).toBe(`${text.length}/3000`);
 });
 
 test("отображение подсказки поля ввода номера заказа вопрос доктору", async({page, mainPageInitialize}) => {
-	await page.getByRole("button", {name: "Важно и полезно"}).click();
-	await page.locator('#navbarScroll').getByRole("link", { name: "Скажите, доктор" }).click();
-	await page.getByRole('link', { name: 'форму' }).click();
-
-	await page.locator("#id_order").fill("1");
-	await expect(page.locator(".custom-tooltip_open")).toBeVisible();
+	const resourcesMainPage = mainPageInitialize;
+	resourcesMainPage.openQuestionDoctor();
+	await page.waitForTimeout(5000);
+	await resourcesMainPage.orderInput.fill("1");
+	await expect(resourcesMainPage.orderToolTip).toBeVisible();
 });
 
 test("отображение подсказки поля ввода номера заказа оставить отзыв", async({page, mainPageInitialize}) => {
-	await page.getByRole("button", {name: "Важно и полезно"}).click();
-	await page.locator('#navbarScroll').getByRole("link", { name: "Оставить отзыв" }).click();
-
-	await page.locator("#id_order").fill("1");
-	await expect(page.locator(".custom-tooltip_open")).toBeVisible();
+	const resourcesMainPage = mainPageInitialize;
+	resourcesMainPage.openFeedBack();
+	await page.waitForTimeout(5000);
+	await resourcesMainPage.orderInput.fill("1");
+	await expect(resourcesMainPage.orderToolTip).toBeVisible();
 });
 
 test("Работа кнопки 'в корзину' на странице 'анализы' в списке", async({page, mainPageInitialize}) => {
-	await page.locator('#navbarScroll').getByRole('link', { name: 'Анализы' }).click();
-
+	//await page.locator('#navbarScroll').getByRole('link', { name: 'Анализы' }).click();
 	await page.locator(".service-item__btn").nth(0).click();
 	await expect(page.locator(".service-item__toast")).toBeVisible();
 	await expect(page.getByRole('button', { name: 'В корзине Перейти в корзину' })).toBeVisible();
