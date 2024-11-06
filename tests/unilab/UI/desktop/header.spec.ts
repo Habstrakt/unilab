@@ -92,7 +92,7 @@ test("сокрытие попапа при количестве введенны
 	const header = headerInitialize;
 	await header.headerSearch.fill("ана");
 	await expect(header.headerSearchResult).toHaveClass(/header__search-result_show/);
-	await header.headerSearchResult.fill("ан");
+	await header.headerSearch.fill("ан");
 	await expect(header.headerSearchResult).not.toHaveClass(/header__search-result_show/);
 });
 

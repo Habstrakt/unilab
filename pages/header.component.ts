@@ -15,6 +15,15 @@ export class Header extends BasePage {
 	readonly burgerMenuBtn: Locator;
 	readonly notFoundCity: Locator;
 
+	readonly analyseLink: Locator;
+	readonly medicalServicesLink: Locator;
+
+	readonly navBarDropDown: Locator;
+	readonly btnFeedBack: Locator;
+
+	readonly btnQuestionDoctor: Locator;
+	readonly questionFormLink: Locator;
+
 	constructor(page: Page) {
 		super(page);
 		this.themeSwitcher = page.locator(".theme-switcher");
@@ -28,6 +37,26 @@ export class Header extends BasePage {
 		this.headerCityLink = page.locator("body > header > div.header__inner > button.header__city-link.city-link.icon-before.btn-reset.grin-hover");
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.notFoundCity = page.locator(".select-city__not-found-popup");
-  }
+
+		this.analyseLink = page.locator('#navbarScroll').getByRole('link', { name: 'Анализы' });
+		this.medicalServicesLink = page.locator('#navbarScroll').getByRole('link', { name: 'Мед. услуги' });
+
+		this.navBarDropDown = page.getByRole("button", { name: "Важно и полезно" });
+		this.btnFeedBack = page.locator('#navbarScroll').getByRole("link", { name: "Оставить отзыв" });
+
+		this.btnQuestionDoctor = page.getByRole("link", { name: "Скажите, доктор" });
+		this.questionFormLink = page.locator("[href='/free_consultation/add_question']");
+	}
+
+	async openFeedBack(){
+		await this.navBarDropDown.click();
+		await this.btnFeedBack.click();
+	};
+
+	async openQuestionDoctor(){
+		await this.navBarDropDown.click();
+		await this.btnQuestionDoctor.click();
+		await this.questionFormLink.click();
+	};
 }
 

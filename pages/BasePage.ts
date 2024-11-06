@@ -7,6 +7,8 @@ export class BasePage {
   readonly btnCookieAccept: Locator;
   readonly overlay: Locator;
 
+  readonly addToCartBtns: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.btnNo = page.locator(".btn-no-js");

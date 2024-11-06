@@ -9,13 +9,13 @@ interface Fixtures {
 
 export const test = baseTest.extend<Fixtures>({
     mainPageInitialize: async({page}, use) => {
-        const pageElement = new MainPage(page);
-        await pageElement.goToUrl();
-        await use(pageElement);
+        const baseElement = new MainPage(page);
+        await baseElement.goToUrl();
+        await use(baseElement);
     },
     headerInitialize: async({page}, use) => {
         const headerComponent = new Header(page);
         await headerComponent.goToUrl();
         await use(headerComponent);
-    }
+    },
 });
