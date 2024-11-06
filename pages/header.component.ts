@@ -34,7 +34,7 @@ export class Header extends BasePage {
 		this.headerSearchResultItem = page.locator(".search-result__item");
     this.selectCity = page.locator(".select-city");
 		this.searchCityInput = page.locator("#searchCityInput");
-		this.headerCityLink = page.locator("body > header > div.header__inner > button.header__city-link.city-link.icon-before.btn-reset.grin-hover");
+		this.headerCityLink = page.locator(".header__city-link");
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.notFoundCity = page.locator(".select-city__not-found-popup");
 

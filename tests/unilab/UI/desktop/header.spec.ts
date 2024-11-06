@@ -31,7 +31,7 @@ test("Анимация изменения ширины поля ввода по�
 	await expect(page.locator(".search")).toHaveCSS("max-width", "100%");
 });
 
-test("Отображение меню выбора города", async({headerInitialize}) => {
+test.only("Отображение меню выбора города", async({headerInitialize}) => {
 	const header = headerInitialize;
 	await header.headerCityLink.click();
 	await expect(header.selectCity).toHaveClass(/show/);
