@@ -1,11 +1,13 @@
 import { devices, expect } from '@playwright/test';
 import { test } from "../../../../fixtures/Fixture"
+import {allure} from "allure-playwright";
+
 
 test.use({
 	locale: "ru-RU",
 	geolocation: {latitude: 50.272796, longitude: 127.526943},
 	permissions: ['geolocation'],
-    ...devices["Pixel 7"]
+	...devices["Pixel 7"],
 });
 
 test("Открытие бургер-меню в мобильной версии", async ({page, headerInitialize}) => {

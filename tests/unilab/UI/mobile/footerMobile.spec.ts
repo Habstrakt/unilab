@@ -5,7 +5,8 @@ test.use({
 	locale: "ru-RU",
 	geolocation: {latitude: 50.272796, longitude: 127.526943},
 	permissions: ['geolocation'],
-    ...devices["Pixel 7"]
+	...devices["Pixel 7"],
+	isMobile: true
 });
 
 test("Работа аккордеона в футтере в мобильной версии", async({page}) => {
