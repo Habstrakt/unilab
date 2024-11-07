@@ -24,9 +24,6 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test --reporter=line,allure-playwright
 
-      - name: Move Allure results to the right directory
-        run: mkdir -p build/allure-results && mv allure-results/* build/allure-results
-
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
