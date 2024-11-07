@@ -22,7 +22,10 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npx playwright test --reporter=line,allure-playwright
+        run: npx playwright test --reporter=line,allure-playwright --debug
+
+      - name: List Allure results directory after tests
+        run: ls -R allure-results || echo "No allure-results found"
     
       - name: Check Allure results
         run: ls -R allure-results || echo "No allure-results found"
@@ -48,7 +51,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: build/allure-results
+          allure_results: allure-results
 
       - name: Publish test report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
