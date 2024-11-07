@@ -6,5 +6,6 @@ node_modules/
 /playwright/.auth/
 /allure-reporter/
 /allure-results/
+/allure-report/
 /unilab/
 .env

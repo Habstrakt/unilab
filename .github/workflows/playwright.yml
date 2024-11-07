@@ -23,9 +23,14 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test --reporter=line,allure-playwright
-
+    
+      - name: Check Allure results
+        run: ls -R allure-results || echo "No allure-results found"
+        
       - name: Move Allure results to the right directory
-        run: mkdir -p build/allure-results && mv allure-results/* build/allure-results
+        run: |
+           mkdir -p build/allure-results
+           mv allure-results/* build/allure-results || echo "No files to move in allure-results"
 
       - name: Check Allure results
         run: ls -R build/allure-results
