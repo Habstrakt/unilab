@@ -8,6 +8,7 @@ test.use({
 	geolocation: {latitude: 50.272796, longitude: 127.526943},
 	permissions: ['geolocation'],
 	...devices["Pixel 7"],
+	isMobile: true
 });
 
 test("Открытие бургер-меню в мобильной версии", async ({page, headerInitialize}) => {
@@ -50,6 +51,59 @@ test("Анимация изменения ширины поля ввода по�
 	await expect(page.locator(".search")).toHaveCSS("max-width", "100%");
 	await page.mouse.wheel(0, 500);
 	await expect(page.locator(".search")).not.toHaveCSS("max-width", "100%");
+});
+
+test("Отображение меню выбора города в мобильной версии", async({headerInitialize}) => {
+	const header = headerInitialize;
+	await header.closePopUps();
+	await header.burgerMenuBtn.tap();
+	await header.headerCityLinkMobile.tap();
+	await expect(header.selectCity).toBeVisible();
+});
+
+test("Выбор города в мобильной версии", async({page, headerInitialize}) => {
+	const header = headerInitialize;
+	await header.closePopUps();
+	await header.burgerMenuBtn.tap();
+	await header.headerCityLinkMobile.tap();
+	await page.locator("[data-slag-city='ussuriisk']").tap();
+	await header.burgerMenuBtn.tap();
+	await expect(header.headerCityLinkMobile).toContainText("Уссурийск");
+});
+
+test("Поиск города в мобильной версии", async({page, headerInitialize}) => {
+	const header = headerInitialize;
+	await header.closePopUps();
+	await header.burgerMenuBtn.tap();
+	await header.headerCityLinkMobile.tap();
+	await header.searchCityInput.fill("Хаба");
+	await expect(page.locator("[data-slag-city='khabarovsk']")).toContainText("Хабаровск");
+});
+
+test("Отсутствие результата поиска города", async({headerInitialize}) => {
+	const header = headerInitialize;
+	await header.closePopUps();
+	await header.burgerMenuBtn.tap();
+	await header.headerCityLinkMobile.tap();
+	await header.searchCityInput.fill("Москва");
+	await expect(header.searchCityInput).toHaveClass("error");
+	await expect(header.notFoundCity).toContainText("Ничего не найдено. Попробуйте изменить запрос.");
+});
+
+test.only("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({headerInitialize}) => {
+	const header = headerInitialize;
+	await header.closePopUps();
+	await header.headerSearch.fill("ана");
+	await expect(header.headerSearchResult).toHaveClass(/header__search-result_show/);
+	await expect(header.headerSearchResultItem.first()).toBeEnabled();
+});
+
+test.only("негативное Отображение попапа результатов поиска", async({page, headerInitialize}) => {
+	const header = headerInitialize;
+	await header.closePopUps();
+	await header.headerSearch.fill("fyf");
+	await expect(header.headerSearchResult).toHaveClass(/header__search-result_show/);
+	await expect(page.locator(".search-result__no-result")).toBeVisible()
 });
 
 

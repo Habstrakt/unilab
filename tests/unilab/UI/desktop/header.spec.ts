@@ -7,8 +7,8 @@ test.use({
 	permissions: ['geolocation'],
 });
 
-test.beforeEach( async({headerInitialize}) => {
-});
+// test.beforeEach( async({headerInitialize}) => {
+// });
 
 test("Изменение шапки при скролле", async({page}) => {
 	await page.mouse.wheel(0, 500);
@@ -72,6 +72,27 @@ test("Отображение меню Для слабовидящих для д�
 	const header = headerInitialize;
 	await header.blindPopUp.click();
 	await expect(header.blindVersionPanel).toBeVisible();
+});
+
+test("смена размера шрифта для слабовидящих", async({page, headerInitialize}) => {
+	const header = headerInitialize;
+	await header.blindPopUp.click();
+	await page.locator("[for='150']").click();
+	await expect(page.locator("html")).toHaveAttribute("style", /font-size: 125%;/)
+	await page.locator("[for='200']").click();
+	await expect(page.locator("html")).toHaveAttribute("style", /font-size: 150%;/)
+	await page.locator("[for='100']").click();
+	await expect(page.locator("html")).toHaveAttribute("style", /font-size: 100%;/)
+});
+
+test("смена цветовой схемы для слабовидящих", async({page, headerInitialize}) => {
+	const header = headerInitialize;
+	await header.blindPopUp.click();
+	await page.locator("[for='dark']").click();
+	await expect(page.locator("body")).toHaveClass(/theme-dark/);
+	await page.locator("[for='invert']").click();
+	await expect(page.locator("html")).toHaveClass(/theme-invert/);
+	await page.locator("[for='light']").click();
 });
 
 test("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({headerInitialize}) => {

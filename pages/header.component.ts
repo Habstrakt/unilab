@@ -12,6 +12,7 @@ export class Header extends BasePage {
 	readonly selectCity: Locator;
 	readonly searchCityInput: Locator;
 	readonly headerCityLink: Locator;
+	readonly headerCityLinkMobile: Locator;
 	readonly burgerMenuBtn: Locator;
 	readonly notFoundCity: Locator;
 
@@ -32,9 +33,10 @@ export class Header extends BasePage {
 		this.headerSearch = page.locator("#searchOnSite");
 		this.headerSearchResult = page.locator(".header__search-result");
 		this.headerSearchResultItem = page.locator(".search-result__item");
-    this.selectCity = page.locator(".select-city");
+    this.selectCity = page.locator("#selectCity");
 		this.searchCityInput = page.locator("#searchCityInput");
 		this.headerCityLink = page.locator(".header__city-link");
+		this.headerCityLinkMobile = page.locator(".header__navbar .city-link");
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.notFoundCity = page.locator(".select-city__not-found-popup");
 
