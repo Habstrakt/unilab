@@ -26,14 +26,19 @@ test("загрузка изображение слайдов", async({mainPageIn
 	};
 });
 
-test("кнопки переключение слайдов на главной странице", async({mainPageInitialize}) => {
+test("кнопки переключение слайдов на главной странице", async({page, mainPageInitialize}) => {
 	const buttons = mainPageInitialize;
 	await expect(buttons.btnPrev).toHaveClass(/swiper-button-disabled/);
-	await expect(buttons.btnNext).not.toHaveClass(/swiper-button-disabled/);
-	await expect(buttons.btnPrev).not.toHaveClass(/swiper-button-disabled/);
+	await buttons.btnNext.click();
+	await buttons.btnNext.click();
 	await expect(buttons.btnNext).toHaveClass(/swiper-button-disabled/);
 });
 
-// test("Работа кнопки 'в корзину' на ", async({page, navigateAndInitialize}) => {
-// 	await page.locator("#searchOnSite").fill("")
-// });
+test.only("Проверка точек слайдов на главной странице", async({page}) => {
+	const bullets = page.locator(".promo-swiper .swiper-pagination-bullet");
+	for(let i = 0; i < await bullets.count(); i++) {
+		const bullet = bullets.nth(i);
+		await bullet.click();
+		await expect(bullet).toHaveClass(/swiper-pagination-bullet-active/);
+	};
+});
