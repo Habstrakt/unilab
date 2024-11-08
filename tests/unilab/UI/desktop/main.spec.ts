@@ -34,7 +34,7 @@ test("кнопки переключение слайдов на главной �
 	await expect(buttons.btnNext).toHaveClass(/swiper-button-disabled/);
 });
 
-test.only("Проверка точек слайдов на главной странице", async({page}) => {
+test("Проверка точек слайдов на главной странице", async({page}) => {
 	const bullets = page.locator(".promo-swiper .swiper-pagination-bullet");
 	for(let i = 0; i < await bullets.count(); i++) {
 		const bullet = bullets.nth(i);
