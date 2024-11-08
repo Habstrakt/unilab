@@ -90,7 +90,7 @@ test("Отсутствие результата поиска города", asyn
 	await expect(header.notFoundCity).toContainText("Ничего не найдено. Попробуйте изменить запрос.");
 });
 
-test.only("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({headerInitialize}) => {
+test("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({headerInitialize}) => {
 	const header = headerInitialize;
 	await header.closePopUps();
 	await header.headerSearch.fill("ана");
@@ -98,7 +98,7 @@ test.only("Отображение попапа результатов поиск
 	await expect(header.headerSearchResultItem.first()).toBeEnabled();
 });
 
-test.only("негативное Отображение попапа результатов поиска", async({page, headerInitialize}) => {
+test("негативное Отображение попапа результатов поиска", async({page, headerInitialize}) => {
 	const header = headerInitialize;
 	await header.closePopUps();
 	await header.headerSearch.fill("fyf");
