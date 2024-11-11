@@ -10,7 +10,7 @@ test.use({
 // test.beforeEach( async({headerInitialize}) => {
 // });
 
-test("Изменение шапки при скролле", async({page}) => {
+test("Изменение шапки при скролле", async({page, headerInitialize}) => {
 	await page.mouse.wheel(0, 500);
 	await expect(page.locator("body")).toHaveClass(/js-scroll/);
 });
