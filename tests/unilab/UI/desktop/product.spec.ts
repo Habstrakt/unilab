@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { Product } from '../../../../pages/Product.page';
+import { Product } from '../../../../pages/product.page';
 
 test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
