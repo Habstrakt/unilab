@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HeaderPage } from "../../../../pages/header.page";
-import { CollectionPage } from "../../../../pages/Collection.page";
+import { CollectionPage } from "../../../../pages/collection.page";
 
 test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
