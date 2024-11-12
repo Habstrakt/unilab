@@ -96,7 +96,7 @@ test("смена цветовой схемы для слабовидящих", a
 	await page.locator("[for='light']").click();
 });
 
-test.only("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({page}) => {
+test("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({page}) => {
 	const headerPage = new HeaderPage(page);
 	await headerPage.headerSearch.fill("ана");
 	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
