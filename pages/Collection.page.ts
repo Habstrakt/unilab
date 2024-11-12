@@ -1,7 +1,7 @@
 import { type Page, type Locator } from '@playwright/test';
-import { Header } from './header.component';
+import { HeaderPage } from './header.page';
 
-export class CollectionPage extends Header {
+export class CollectionPage extends HeaderPage {
     protected page: Page;
     addToCartButtons: Locator;
 

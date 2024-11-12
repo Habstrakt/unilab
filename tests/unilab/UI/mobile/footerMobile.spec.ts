@@ -1,5 +1,4 @@
-import { devices, expect } from '@playwright/test';
-import { test } from "../../../../fixtures/Fixture"
+import { test, devices, expect } from '@playwright/test';
 
 test.use({
 	locale: "ru-RU",
@@ -7,6 +6,10 @@ test.use({
 	permissions: ['geolocation'],
 	...devices["Pixel 7"],
 	isMobile: true
+});
+
+test.beforeEach(async({page}) => {
+	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
 test("Работа аккордеона в футтере в мобильной версии", async({page}) => {

@@ -1,5 +1,5 @@
 import { type Page, type Locator } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from './base.page';
 
 export class Product extends BasePage {
   protected: Page

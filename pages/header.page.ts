@@ -1,8 +1,8 @@
 import { type Page, type Locator } from "@playwright/test";
 
-import { BasePage } from "./BasePage";
+import { BasePage } from "./base.page";
 
-export class Header extends BasePage {
+export class HeaderPage extends BasePage {
 	readonly themeSwitcher: Locator;
 	readonly blindPopUp: Locator;
 	readonly blindVersionPanel: Locator;
@@ -16,7 +16,7 @@ export class Header extends BasePage {
 	readonly burgerMenuBtn: Locator;
 	readonly notFoundCity: Locator;
 
-	readonly analyseLink: Locator;
+	readonly analysisLink: Locator;
 	readonly medicalServicesLink: Locator;
 
 	readonly navBarDropDown: Locator;
@@ -24,6 +24,8 @@ export class Header extends BasePage {
 
 	readonly btnQuestionDoctor: Locator;
 	readonly questionFormLink: Locator;
+
+	readonly addresses: Locator;
 
 	constructor(page: Page) {
 		super(page);
@@ -40,7 +42,7 @@ export class Header extends BasePage {
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.notFoundCity = page.locator(".select-city__not-found-popup");
 
-		this.analyseLink = page.locator('#navbarScroll').getByRole('link', { name: 'Анализы' });
+		this.analysisLink = page.locator('#navbarScroll').getByRole('link', { name: 'Анализы' });
 		this.medicalServicesLink = page.locator('#navbarScroll').getByRole('link', { name: 'Мед. услуги' });
 
 		this.navBarDropDown = page.getByRole("button", { name: "Важно и полезно" });
@@ -48,6 +50,8 @@ export class Header extends BasePage {
 
 		this.btnQuestionDoctor = page.getByRole("link", { name: "Скажите, доктор" });
 		this.questionFormLink = page.locator("[href='/free_consultation/add_question']");
+
+		this.addresses = page.locator("#navbarScroll").getByRole("link", {name: "Адреса"});
 	}
 
 	async openFeedBack(){

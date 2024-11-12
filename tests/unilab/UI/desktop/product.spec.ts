@@ -1,8 +1,8 @@
-import { expect } from '@playwright/test';
-import { test } from "../../../../fixtures/Fixture";
+import { test, expect } from '@playwright/test';
 import { Product } from '../../../../pages/Product.page';
 
-test.beforeEach(async({mainPageInitialize}) => {
+test.beforeEach(async({page}) => {
+	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
 test("Работа кнопки 'в корзину' внутри карточки услуги", async({page}) => {

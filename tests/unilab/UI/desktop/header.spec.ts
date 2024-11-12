@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
-import { test } from "../../../../fixtures/Fixture"
+import { test, expect } from '@playwright/test';
+import { HeaderPage } from '../../../../pages/header.page';
 
 test.use({
 	locale: "ru-RU",
@@ -7,76 +7,77 @@ test.use({
 	permissions: ['geolocation'],
 });
 
-// test.beforeEach( async({headerInitialize}) => {
-// });
+test.beforeEach(async({page}) => {
+	await page.goto("/", {waitUntil: "domcontentloaded"})
+});
 
-test("Изменение шапки при скролле", async({page, headerInitialize}) => {
+test("Изменение шапки при скролле", async({page}) => {
 	await page.mouse.wheel(0, 500);
 	await expect(page.locator("body")).toHaveClass(/js-scroll/);
 });
 
-test("Скрытие попапа при клике на оверлей", async({headerInitialize}) => {
-	const header = headerInitialize;
-	await header.blindPopUp.click();
-	await header.blindVersionPanel.click();
-	await expect(header.blindVersionPanel).toHaveClass(/show/);
-	await header.overlay.click();
-	await expect(header.blindVersionPanel).not.toHaveClass(/show/)
+test("Скрытие попапа при клике на оверлей", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.blindPopUp.click();
+	await headerPage.blindVersionPanel.click();
+	await expect(headerPage.blindVersionPanel).toHaveClass(/show/);
+	await headerPage.overlay.click();
+	await expect(headerPage.blindVersionPanel).not.toHaveClass(/show/)
 });
 
-test("Анимация изменения ширины поля ввода поиска при фокусе в десктопной версии", async({page, headerInitialize}) => {
-	const header = headerInitialize;
+test("Анимация изменения ширины поля ввода поиска при фокусе в десктопной версии", async({page}) => {
+	const headerPage = new HeaderPage(page);
 	await page.mouse.wheel(0, 500);
-	await header.headerSearch.click();
+	await headerPage.headerSearch.click();
 	await expect(page.locator(".search")).toHaveCSS("max-width", "100%");
 });
 
-test("Отображение меню выбора города", async({headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerCityLink.click();
-	await expect(header.selectCity).toHaveClass(/show/);
+test("Отображение меню выбора города", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerCityLink.click();
+	await expect(headerPage.selectCity).toHaveClass(/show/);
 });
 
-test("Выбор города", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerCityLink.click();
+test("Выбор города", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerCityLink.click();
 	await page.locator("[data-slag-city='ussuriisk']").click();
 	await expect(page.locator(".header__city-link")).toContainText("Уссурийск");
 });
 
-test("Поиск города", async ({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerCityLink.click();
-	await header.searchCityInput.fill("Хаба");
+test("Поиск города", async ({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerCityLink.click();
+	await headerPage.searchCityInput.fill("Хаба");
 	await expect(page.locator("[data-slag-city='khabarovsk']")).toContainText("Хабаровск");
 });
 
-test("Отсутствие результата поиска города", async({headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerCityLink.click();
-	await header.searchCityInput.fill("Москва");
-	await expect(header.searchCityInput).toHaveClass("error");
-	await expect(header.notFoundCity).toContainText("Ничего не найдено. Попробуйте изменить запрос.");
+test("Отсутствие результата поиска города", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerCityLink.click();
+	await headerPage.searchCityInput.fill("Москва");
+	await expect(headerPage.searchCityInput).toHaveClass("error");
+	await expect(headerPage.notFoundCity).toContainText("Ничего не найдено. Попробуйте изменить запрос.");
 });
 
-test("Сброс результатов поиска города при закрытии попапа выбора города", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerCityLink.click();
-	await header.searchCityInput.fill("Благовещенск");
+test("Сброс результатов поиска города при закрытии попапа выбора города", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerCityLink.click();
+	await headerPage.searchCityInput.fill("Благовещенск");
 	await page.locator("#selectCity > div.popup-header > button").click();
-	await header.headerCityLink.click();
-	await expect(header.searchCityInput).not.toContainText("Благовещенск");
+	await headerPage.headerCityLink.click();
+	await expect(headerPage.searchCityInput).not.toContainText("Благовещенск");
 });
 
-test("Отображение меню Для слабовидящих для десктопной версии", async({headerInitialize}) => {
-	const header = headerInitialize;
-	await header.blindPopUp.click();
-	await expect(header.blindVersionPanel).toBeVisible();
+test("Отображение меню Для слабовидящих для десктопной версии", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.blindPopUp.click();
+	await expect(headerPage.blindVersionPanel).toBeVisible();
 });
 
-test("смена размера шрифта для слабовидящих", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.blindPopUp.click();
+test("смена размера шрифта для слабовидящих", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.blindPopUp.click();
 	await page.locator("[for='150']").click();
 	await expect(page.locator("html")).toHaveAttribute("style", /font-size: 125%;/)
 	await page.locator("[for='200']").click();
@@ -85,9 +86,9 @@ test("смена размера шрифта для слабовидящих", a
 	await expect(page.locator("html")).toHaveAttribute("style", /font-size: 100%;/)
 });
 
-test("смена цветовой схемы для слабовидящих", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.blindPopUp.click();
+test("смена цветовой схемы для слабовидящих", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.blindPopUp.click();
 	await page.locator("[for='dark']").click();
 	await expect(page.locator("body")).toHaveClass(/theme-dark/);
 	await page.locator("[for='invert']").click();
@@ -95,39 +96,39 @@ test("смена цветовой схемы для слабовидящих", a
 	await page.locator("[for='light']").click();
 });
 
-test("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerSearch.fill("ана");
-	await expect(header.headerSearchResult).toHaveClass(/header__search-result_show/);
-	await expect(header.headerSearchResultItem.first()).toBeEnabled();
+test.only("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerSearch.fill("ана");
+	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
+	await expect(headerPage.headerSearchResultItem.first()).toBeEnabled();
 });
 
-test("негативное Отображение попапа результатов поиска", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerSearch.fill("fyf");
-	await expect(header.headerSearchResult).toHaveClass(/header__search-result_show/);
+test("негативное Отображение попапа результатов поиска", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerSearch.fill("fyf");
+	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
 	await expect(page.locator(".search-result__no-result")).toBeVisible()
 });
 
-test("сокрытие попапа при количестве введенных символов меньше трех", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerSearch.fill("ана");
-	await expect(header.headerSearchResult).toHaveClass(/header__search-result_show/);
-	await header.headerSearch.fill("ан");
-	await expect(header.headerSearchResult).not.toHaveClass(/header__search-result_show/);
+test("сокрытие попапа при количестве введенных символов меньше трех", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerSearch.fill("ана");
+	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
+	await headerPage.headerSearch.fill("ан");
+	await expect(headerPage.headerSearchResult).not.toHaveClass(/header__search-result_show/);
 });
 
-test("Сокрытие попапа результата поиска при клике во вне попапа", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerSearch.fill("ана");
-	await expect(header.headerSearchResult).toHaveClass(/header__search-result_show/);
+test("Сокрытие попапа результата поиска при клике во вне попапа", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerSearch.fill("ана");
+	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
 	await page.mouse.click(100, 0);
-	await expect(header.headerSearchResult).not.toHaveClass(/header__search-result_show/);
+	await expect(headerPage.headerSearchResult).not.toHaveClass(/header__search-result_show/);
 });
 
-test("Переход на страницу результата поиска при нажатии клавиши Enter", async({page, headerInitialize}) => {
-	const header = headerInitialize;
-	await header.headerSearch.fill("анализ");
+test("Переход на страницу результата поиска при нажатии клавиши Enter", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	await headerPage.headerSearch.fill("анализ");
 	await page.keyboard.press("Enter");
 	await expect(page).toHaveURL(/search\/\?q=/);
 });
