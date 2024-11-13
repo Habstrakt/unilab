@@ -48,7 +48,7 @@ test("Проверка точек слайдов на главной стран�
 	};
 });
 
-test.only("Переключение табов на главной странице сайта", async({page}) => {
+test("Переключение табов на главной странице сайта", async({page}) => {
 	const homePage = new HomePage(page);
 	const homeTab = page.locator("#nav-home-tab");
 	const complexTab = page.locator("#complexes-tab");
