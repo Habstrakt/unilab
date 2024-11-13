@@ -8,7 +8,10 @@ export class BasePage {
   readonly btnCookieAccept: Locator;
   readonly overlay: Locator;
 
-  readonly addToCartBtns: Locator;
+  readonly addToCartBtn: Locator;
+  readonly addToCartButtons: Locator;
+
+  readonly serviceName: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +20,9 @@ export class BasePage {
     this.closePopUpBtn = page.getByRole('button', { name: 'Закрыть' });
     this.btnCookieAccept = page.locator("#btnCookieAccept");
     this.overlay = page.locator("#overlay");
+    this.addToCartBtn = page.locator(".btn-to-cart");
+    this.addToCartButtons = page.locator(".service-item__btn");
+    this.serviceName = page.locator(".header__cart-link");
   }
 
   async closePopUps() {
@@ -24,4 +30,13 @@ export class BasePage {
 		await this.closePopUpBtn.click();
 		await this.btnCookieAccept.click();
 	};
+
+  async clickRandomAddToCartButton() {
+    const btnCount = await this.addToCartButtons.count();
+    const randomIndex = Math.floor(Math.random() * btnCount);
+    const randomBtn = this.addToCartButtons.nth(randomIndex);
+    const serviceName = await this.page.locator(".service-item__title-text").nth(randomIndex).textContent();
+    await randomBtn.click();
+    return serviceName;
+  };
 };

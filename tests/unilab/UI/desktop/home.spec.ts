@@ -3,7 +3,7 @@ import { BasePage } from '../../../../pages/base.page';
 import { HomePage } from '../../../../pages/home.page';
 
 
-test.afterEach(async({page}) => {
+test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
@@ -46,4 +46,16 @@ test("Проверка точек слайдов на главной стран�
 		await bullet.click();
 		await expect(bullet).toHaveClass(/swiper-pagination-bullet-active/);
 	};
+});
+
+test.only("Переключение табов на главной странице сайта", async({page}) => {
+	const homePage = new HomePage(page);
+	const homeTab = page.locator("#nav-home-tab");
+	const complexTab = page.locator("#complexes-tab");
+
+	await expect(homeTab).toHaveClass(/active/);
+	console.log(await page.locator(".top-services__slide-title").allTextContents());
+
+	await complexTab.click();
+	console.log(await page.locator(".top-services__slide-title").allTextContents());
 });

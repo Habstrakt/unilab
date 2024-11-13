@@ -64,5 +64,10 @@ export class HeaderPage extends BasePage {
 		await this.btnQuestionDoctor.click();
 		await this.questionFormLink.click();
 	};
+
+	async serviceSearch(text: string) {
+		await this.headerSearch.fill(text);
+		await this.page.keyboard.press("Enter");
+	}
 }
 

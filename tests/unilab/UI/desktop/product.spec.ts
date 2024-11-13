@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test';
-import { Product } from '../../../../pages/product.page';
+import { ProductPage } from '../../../../pages/product.page';
+import { BasePage } from '../../../../pages/base.page';
 
 test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
 test("Работа кнопки 'в корзину' внутри карточки услуги", async({page}) => {
-  const addToCart = new Product(page);
-  await addToCart.medicalServicesMenuLink.click();
-	await addToCart.clickRandomMedicalServices();
-	await addToCart.addToCartBtn.click();
+  const productPage = new ProductPage(page);
+	const basePage = new BasePage(page);
+  await productPage.medicalServicesMenuLink.click();
+	await productPage.clickRandomMedicalServices();
+	await basePage.addToCartBtn.click();
 
 	await expect(page.locator(".service-item__toast")).toBeVisible();
 });
