@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { BasePage } from "../../../../pages/base.page";
 import { HeaderPage } from "../../../../pages/header.page";
-import { CollectionPage } from "../../../../pages/сollection.page";
+import { CollectionPage } from '../../../../pages/сollection.page';
 
 
 test.beforeEach(async({page}) => {
@@ -26,5 +26,15 @@ test("Работа кнопки 'в корзину' на странице 'ме�
 	await expect(page.locator(".service-item__toast")).toBeVisible();
 	await basePage.serviceName.click();
 	await expect(page.locator(".cart-item__title")).toContainText(serviceName!);
+});
+
+test.only("", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	const collectionPage = new CollectionPage(page);
+	await headerPage.analysisLink.click();
+
+	await collectionPage.clickToServiceTab();
+
+	await expect(page.locator("[aria-current='Анализы']")).toBeVisible();
 });
 

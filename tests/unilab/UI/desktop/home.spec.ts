@@ -50,12 +50,12 @@ test("Проверка точек слайдов на главной стран�
 
 test("Переключение табов на главной странице сайта", async({page}) => {
 	const homePage = new HomePage(page);
-	const homeTab = page.locator("#nav-home-tab");
-	const complexTab = page.locator("#complexes-tab");
+	await page.mouse.wheel(0, 500);
 
-	await expect(homeTab).toHaveClass(/active/);
-	console.log(await page.locator(".top-services__slide-title").allTextContents());
-
-	await complexTab.click();
-	console.log(await page.locator(".top-services__slide-title").allTextContents());
+	await expect(homePage.homeTab).toHaveClass(/active/);
+	await homePage.visibleSliderItem(homePage.analyzeSliderItems);
+	await homePage.complexTab.click();
+	await expect(homePage.complexTab).toHaveClass(/active/);
+	await expect(homePage.homeTab).not.toHaveClass(/active/);
+	await homePage.visibleSliderItem(homePage.complexSliderItems);
 });
