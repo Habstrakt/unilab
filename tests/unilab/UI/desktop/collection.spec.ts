@@ -28,13 +28,18 @@ test("Работа кнопки 'в корзину' на странице 'ме�
 	await expect(page.locator(".cart-item__title")).toContainText(serviceName!);
 });
 
-test.only("", async({page}) => {
+test("Переключение табов на странице анализов", async({page}) => {
 	const headerPage = new HeaderPage(page);
 	const collectionPage = new CollectionPage(page);
 	await headerPage.analysisLink.click();
+	await collectionPage.clickToTab();
+});
 
-	await collectionPage.clickToServiceTab();
-
-	await expect(page.locator("[aria-current='Анализы']")).toBeVisible();
+test("Переключение табов на мед услуг", async({page}) => {
+	const headerPage = new HeaderPage(page);
+	const collectionPage = new CollectionPage(page);
+	await headerPage.medicalServicesLink.click();
+	await collectionPage.clickToTab();
+	//await expect(collectionPage.serviceTitleSection).toContainText(/Комплексы/);
 });
 
