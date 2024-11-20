@@ -19,7 +19,7 @@ test("поле ввода даты формы на странице отзыва
 	await expect(addressPage.visitorDate).not.toBeEmpty();
 });
 
-test.only("", async({page}) => {
+test("", async({page}) => {
 	const headerPage = new HeaderPage(page);
 	const basePage = new BasePage(page);
 	const addressPage = new AddressPage(page);
