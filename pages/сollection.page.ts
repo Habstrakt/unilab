@@ -15,12 +15,11 @@ export class CollectionPage extends HeaderPage {
 
 	async clickToTab() {
 		const count = this.serviceTypeItem.count();
-		for(let i = 0; i < await count; i++) {
+		for(let i = 1; i < await count; i++) {
+			await expect(this.serviceTypeItem.nth(i - 1)).toHaveClass(/active/);
 			await this.serviceTypeItem.nth(i).click();
-			await expect(this.serviceTypeItem.nth(i)).toHaveClass(/active/);
 			if(i < await count - 1) {
-				await expect(this.serviceTypeItem.nth(i + 1)).not.toHaveClass(/active/);
-				//await expect(this.serviceTitleSection).toContainText(/Анализы/);
+				await expect(this.serviceTypeItem.nth(i - 1)).not.toHaveClass(/active/);
 			};
 		};
 	};

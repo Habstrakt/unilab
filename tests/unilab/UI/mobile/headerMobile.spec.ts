@@ -5,7 +5,7 @@ import { HeaderPage } from '../../../../pages/header.page';
 test.use({
 	locale: "ru-RU",
 	geolocation: {latitude: 50.272796, longitude: 127.526943},
-	permissions: ['geolocation'],
+	permissions: ["geolocation"],
 	...devices["Pixel 7"],
 	isMobile: true
 });
@@ -106,6 +106,8 @@ test("негативное Отображение попапа результа�
 	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
 	await expect(page.locator(".search-result__no-result")).toBeVisible()
 });
+
+
 
 
 // 

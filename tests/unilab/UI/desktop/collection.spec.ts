@@ -35,11 +35,10 @@ test("Переключение табов на странице анализов
 	await collectionPage.clickToTab();
 });
 
-test("Переключение табов на мед услуг", async({page}) => {
+test("Переключение табов на странице мед услуг", async({page}) => {
 	const headerPage = new HeaderPage(page);
 	const collectionPage = new CollectionPage(page);
 	await headerPage.medicalServicesLink.click();
 	await collectionPage.clickToTab();
-	//await expect(collectionPage.serviceTitleSection).toContainText(/Комплексы/);
 });
 
