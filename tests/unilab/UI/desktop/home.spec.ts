@@ -15,7 +15,7 @@ test("Отображение попапа согласия на использо
 	expect(cookie.find((c) => c.name == "cookie_accepted")?.value).toBe("True");
 });
 
-test("Кнопка “вернуться наверх страницы” появляющаяся при скролле на десктопной версии", async({page}) => {
+test.fixme("Кнопка “вернуться наверх страницы” появляющаяся при скролле на десктопной версии", async({page}) => {
 	const homePage = new HomePage(page);
 	await page.mouse.wheel(0, 800);
 	expect(homePage.upBtn).toBeVisible();

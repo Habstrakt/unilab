@@ -1,5 +1,4 @@
 import { type Page, type Locator } from "@playwright/test";
-
 import { BasePage } from "./base.page";
 
 export class HeaderPage extends BasePage {
@@ -18,6 +17,7 @@ export class HeaderPage extends BasePage {
 
 	readonly analysisLink: Locator;
 	readonly medicalServicesLink: Locator;
+	readonly onlineRecordLink: Locator;
 
 	readonly navBarDropDown: Locator;
 	readonly btnFeedBack: Locator;
@@ -42,8 +42,9 @@ export class HeaderPage extends BasePage {
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.notFoundCity = page.locator(".select-city__not-found-popup");
 
-		this.analysisLink = page.locator('#navbarScroll').getByRole('link', { name: 'Анализы' });
-		this.medicalServicesLink = page.locator('#navbarScroll').getByRole('link', { name: 'Мед. услуги' });
+		this.analysisLink = page.locator("#navbarScroll").getByRole("link", { name: "Анализы" });
+		this.medicalServicesLink = page.locator("#navbarScroll").getByRole("link", { name: "Мед. услуги" });
+		this.onlineRecordLink = page.locator("#navbarScroll").getByRole("link", {name: "Онлайн-запись"});
 
 		this.navBarDropDown = page.getByRole("button", { name: "Важно и полезно" });
 		this.btnFeedBack = page.locator('#navbarScroll').getByRole("link", { name: "Оставить отзыв" });

@@ -42,6 +42,7 @@ test("Удалить номер телефона на странице 'оста
 	const visitorPhone = page.locator("#id_visitor_phone");
 	await visitorPhone.fill("9146575925");
 	await visitorPhone.click();
+	await page.keyboard.press("End");
 
 	for(let i = 0; i <= (await visitorPhone.inputValue()).length; i++) {
 		await page.keyboard.press("Backspace");
