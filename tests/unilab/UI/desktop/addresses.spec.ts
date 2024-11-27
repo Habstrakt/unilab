@@ -22,7 +22,6 @@ test("поле ввода даты формы на странице отзыва
 test("Работа фильтра на странице адресов", async({page}) => {
 	const headerPage = new HeaderPage(page);
 	const basePage = new BasePage(page);
-	const addressPage = new AddressPage(page);
 	await basePage.btnYes.click();
 	await headerPage.addresses.click();
 
