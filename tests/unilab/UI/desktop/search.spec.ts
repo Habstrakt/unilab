@@ -24,5 +24,6 @@ test("Загрузка дополнительных результатов по�
 	let serviceItem = page.locator(".service-item");
 	expect(await serviceItem.count()).toEqual(9);
 	await page.getByText('Показать ещё').nth(0).click();
+	await page.waitForTimeout(1000);
 	expect(await serviceItem.count()).toBeGreaterThan(9);
 });
