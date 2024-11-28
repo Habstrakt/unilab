@@ -5,12 +5,14 @@ export class CollectionPage extends HeaderPage {
 	protected page: Page;
 	readonly serviceTypeItem: Locator;
 	readonly serviceTitleSection: Locator;
+	readonly addToCartBtn: Locator;
 
 	constructor(page: Page) {
 		super(page);
 		this.page = page;
 		this.serviceTypeItem = page.locator(".types-services__tab-item");
 		this.serviceTitleSection = page.locator(".service-title-section");
+		this.addToCartBtn = page.locator(".service-item__btn");
 	};
 
 	async clickToTab() {
@@ -23,4 +25,11 @@ export class CollectionPage extends HeaderPage {
 			};
 		};
 	};
+
+	async addToRandomService() {
+		const medicalServiceCount = this.addToCartBtn.count();
+		const randomIndex = Math.floor(Math.random() * await medicalServiceCount);
+		const randomServices = this.addToCartBtn.nth(randomIndex);
+		await randomServices.click();
+	}
 };

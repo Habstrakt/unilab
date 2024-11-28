@@ -1,41 +1,41 @@
 import { test, expect } from "@playwright/test";
 import { HeaderPage } from "../../../../pages/header.page";
-import { ProductPage } from "../../../../pages/product.page";
-import { BasePage } from "../../../../pages/base.page";
+import { CartPage } from '../../../../pages/cart.page';
+import { CollectionPage } from '../../../../pages/сollection.page';
 
 test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test.only("Удалить услугу в корзине", async({page}) => {
+test("Удалить услугу в корзине", async({page}) => {
   const headerPage = new HeaderPage(page);
-  const productPage = new ProductPage(page);
-  const basePage = new BasePage(page);
-
-
+  const cartPage = new CartPage(page);
   await headerPage.medicalServicesLink.click();
-  await productPage.clickRandomMedicalServices();
-  await basePage.addToCartBtn.click();
-
-
-  await page.locator(".header__cart-link").click();
-  await page.locator(".cart__item-delete").click();
-  await expect(page.locator("#cartDetail > div > div").nth(0)).toContainText("Корзина пуста");
-  await expect(page.locator("#cartDetail > div > div").nth(1)).toContainText("Перейдите в раздел «Анализы», чтобы добавить необходимые исследования");
+  await cartPage.addToCart();
+  await cartPage.deleteItemBtn.click();
+  await expect(cartPage.title).toContainText("Корзина пуста");
+  await expect(cartPage.subTitle).toContainText("Перейдите в раздел «Анализы», чтобы добавить необходимые исследования");
 });
 
-test.only("удалить мед. услугу в корзине", async({page}) => {
+test("Удалить мед. услугу в корзине", async({page}) => {
   const headerPage = new HeaderPage(page);
-  const productPage = new ProductPage(page);
-  const basePage = new BasePage(page);
-
+  const cartPage = new CartPage(page);
   await headerPage.analysisLink.click();
-  await productPage.clickRandomMedicalServices();
-  await basePage.addToCartBtn.click();
-
-  await page.locator(".header__cart-link").click();
-  await page.locator(".cart__item-delete").click();
-  await expect(page.locator("#cartDetail > div > div").nth(0)).toContainText("Корзина пуста");
-  await expect(page.locator("#cartDetail > div > div").nth(1)).toContainText("Перейдите в раздел «Анализы», чтобы добавить необходимые исследования");
-
+  await cartPage.addToCart();
+  await cartPage.deleteItemBtn.click();
+  await expect(cartPage.title).toContainText("Корзина пуста");
+  await expect(cartPage.subTitle).toContainText("Перейдите в раздел «Анализы», чтобы добавить необходимые исследования");
 });
+
+test("Кнопка очистить корзину", async({page}) => {
+  const cartPage = new CartPage(page);
+  const headerPage = new HeaderPage(page);
+  const collectionPage = new CollectionPage(page);
+  await headerPage.medicalServicesLink.click();
+  await collectionPage.addToRandomService();
+  await collectionPage.addToRandomService();
+  await headerPage.cartLink.click();
+  await cartPage.clearCartBtn.click();
+  await expect(cartPage.title).toContainText("Корзина пуста");
+  await expect(cartPage.subTitle).toContainText("Перейдите в раздел «Анализы», чтобы добавить необходимые исследования");
+})

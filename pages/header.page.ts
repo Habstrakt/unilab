@@ -14,6 +14,7 @@ export class HeaderPage extends BasePage {
 	readonly headerCityLinkMobile: Locator;
 	readonly burgerMenuBtn: Locator;
 	readonly notFoundCity: Locator;
+	readonly cartLink: Locator;
 
 	readonly analysisLink: Locator;
 	readonly medicalServicesLink: Locator;
@@ -41,6 +42,7 @@ export class HeaderPage extends BasePage {
 		this.headerCityLinkMobile = page.locator(".header__navbar .city-link");
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.notFoundCity = page.locator(".select-city__not-found-popup");
+		this.cartLink = page.locator(".header__cart-link");
 
 		this.analysisLink = page.locator("#navbarScroll").getByRole("link", { name: "Анализы" });
 		this.medicalServicesLink = page.locator("#navbarScroll").getByRole("link", { name: "Мед. услуги" });
