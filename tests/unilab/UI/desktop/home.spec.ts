@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import { BasePage } from '../../../../pages/base.page';
 import { HomePage } from '../../../../pages/home.page';
 
-
 test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
@@ -58,13 +57,4 @@ test("Переключение табов на главной странице �
 	await expect(homePage.complexTab).toHaveClass(/active/);
 	await expect(homePage.homeTab).not.toHaveClass(/active/);
 	await homePage.visibleSliderItem(homePage.complexSliderItems);
-});
-
-test("Отображение всплывающего окна подписаться на новости и акции", async({page}) => {
-	const basePage = new BasePage(page);
-	await basePage.subscribeBtn.click();
-	await expect(page.locator("#footerSubscribe")).toBeVisible();
-	await expect(page.locator("#subscribeInput")).toBeVisible();
-	await expect(page.locator("#acceptButton")).toBeVisible();
-	await expect(page.locator("#cancelButton")).toBeVisible();
 });

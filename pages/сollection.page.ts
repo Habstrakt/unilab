@@ -32,4 +32,11 @@ export class CollectionPage extends HeaderPage {
 		const randomServices = this.addToCartBtn.nth(randomIndex);
 		await randomServices.click();
 	}
+
+	async randomFilter() {
+		const itemFilterCount = this.page.locator(".accordion-item").count();
+		const randomIndex = Math.floor(Math.random() * await itemFilterCount);
+		const randomFilterItem = this.page.locator(".accordion-item").nth(randomIndex);
+		await randomFilterItem.click();
+	}
 };

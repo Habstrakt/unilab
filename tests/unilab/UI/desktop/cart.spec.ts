@@ -38,4 +38,4 @@ test("Кнопка очистить корзину", async({page}) => {
   await cartPage.clearCartBtn.click();
   await expect(cartPage.title).toContainText("Корзина пуста");
   await expect(cartPage.subTitle).toContainText("Перейдите в раздел «Анализы», чтобы добавить необходимые исследования");
-})
+});

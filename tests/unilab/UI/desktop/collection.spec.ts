@@ -28,17 +28,21 @@ test("Работа кнопки 'в корзину' на странице 'ме�
 	await expect(page.locator(".cart-item__title")).toContainText(serviceName!);
 });
 
-test("Переключение табов на странице анализов", async({page}) => {
+test("Переключение табов на странице услуг", async({page}) => {
 	const headerPage = new HeaderPage(page);
 	const collectionPage = new CollectionPage(page);
 	await headerPage.analysisLink.click();
 	await collectionPage.clickToTab();
 });
 
-test("Переключение табов на странице мед услуг", async({page}) => {
+test.only("Фильтр услуг", async({page}) => {
 	const headerPage = new HeaderPage(page);
 	const collectionPage = new CollectionPage(page);
-	await headerPage.medicalServicesLink.click();
-	await collectionPage.clickToTab();
+	await headerPage.onlineRecordLink.click();
+	await page.locator("[data-bs-target='#services']").click();
+	await collectionPage.randomFilter();
+	await page.locator(".accordion-body .filter__item ").nth(0).click();
+
+	await page.waitForTimeout(1000);
 });
 

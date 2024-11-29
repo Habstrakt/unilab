@@ -7,7 +7,6 @@ export class BasePage {
   readonly closePopUpBtn: Locator;
   readonly btnCookieAccept: Locator;
   readonly overlay: Locator;
-  readonly subscribeBtn: Locator;
 
   readonly addToCartBtn: Locator;
   readonly addToCartButtons: Locator;
@@ -24,7 +23,6 @@ export class BasePage {
     this.addToCartBtn = page.locator(".btn-to-cart");
     this.addToCartButtons = page.locator(".service-item__btn");
     this.serviceName = page.locator(".header__cart-link");
-    this.subscribeBtn = page.getByRole("button", {name : "Подписаться на новости и акции"})
   }
 
   async closePopUps() {
