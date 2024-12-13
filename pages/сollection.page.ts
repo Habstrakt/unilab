@@ -33,10 +33,35 @@ export class CollectionPage extends HeaderPage {
 		await randomServices.click();
 	}
 
+	// async randomFilter() {
+	// 	const itemFilterCount = this.page.locator(".accordion-item").count();
+	// 	const randomIndex = Math.floor(Math.random() * await itemFilterCount);
+	// 	//const randomFilterItem = this.page.locator(".accordion-item").nth(randomIndex);
+	// 	const randomFilterItem = this.page.locator(`[data-bs-target="#Category-${randomIndex}"]`)
+	// 	await randomFilterItem.click();
+	// 	return randomFilterItem;
+	// }
+
 	async randomFilter() {
-		const itemFilterCount = this.page.locator(".accordion-item").count();
-		const randomIndex = Math.floor(Math.random() * await itemFilterCount);
-		const randomFilterItem = this.page.locator(".accordion-item").nth(randomIndex);
-		await randomFilterItem.click();
+		const itemFilterCount = await this.page.locator(".accordion-item").count();
+    const randomIndex = Math.floor(Math.random() * itemFilterCount);
+
+    const randomFilterItem = this.page.locator(`[data-bs-target="#Category-${randomIndex}"]`);
+    await randomFilterItem.click();
+
+    const itemCount = await this.page.locator(`#Category-${randomIndex} .filter__item`).count();
+    const randomIndexItem = Math.floor(Math.random() * itemCount);
+
+    const randomItem = this.page.locator(`#Category-${randomIndex} .filter__item`).nth(randomIndexItem);
+
+    await randomItem.click();
+    return randomFilterItem;
 	}
+
+	// async randomService() {
+	// 	const itemFilterCount = this.page.locator(".accordion-item .filter__item").count();
+	// 	const randomIndex = Math.floor(Math.random() * await itemFilterCount);
+	// 	const randomServiceItem = this.page.locator(".accordion-item .filter__item").nth(randomIndex);;
+	// 	await randomServiceItem.click();
+	// }
 };
