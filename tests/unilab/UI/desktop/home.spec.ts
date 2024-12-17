@@ -33,6 +33,7 @@ test("кнопки переключение слайдов на главной �
 	await expect(homePage.btnPrev).toHaveClass(/swiper-button-disabled/);
 	await homePage.btnNext.click();
 	await homePage.btnNext.click();
+	await homePage.btnNext.click();
 	await expect(homePage.btnNext).toHaveClass(/swiper-button-disabled/);
 });
 
