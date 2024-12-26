@@ -22,6 +22,7 @@ export class HeaderPage extends BasePage {
 
 	readonly navBarDropDown: Locator;
 	readonly btnFeedBack: Locator;
+	readonly btnTax: Locator;
 
 	readonly btnQuestionDoctor: Locator;
 	readonly questionFormLink: Locator;
@@ -50,6 +51,7 @@ export class HeaderPage extends BasePage {
 
 		this.navBarDropDown = page.getByRole("button", { name: "Важно и полезно" });
 		this.btnFeedBack = page.locator('#navbarScroll').getByRole("link", { name: "Оставить отзыв" });
+		this.btnTax = page.locator('#navbarScroll').getByRole("link", { name: "Налоговый вычет" });
 
 		this.btnQuestionDoctor = page.getByRole("link", { name: "Скажите, доктор" });
 		this.questionFormLink = page.locator("[href='/free_consultation/add_question']");
