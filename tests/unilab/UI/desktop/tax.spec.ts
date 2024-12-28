@@ -23,14 +23,6 @@ test("Предупреждение что поле с ИНН должен сос
   await expect(taxPage.innInput).toHaveAttribute("customvaliditymessage", "ИНН должен состоять из 12 цифр");
 });
 
-test.only("Проверка валидности ИНН", async({page}) => {
-  const taxPage = new TaxPage(page);
-  await taxPage.innInput.fill("1234567890121");
-  const isValid = (await taxPage.innInput.evaluate(input => input.checkValidity()));
-  console.log(isValid)
-  expect(isValid).toBe(true);
-});
-
 test("Предупреждение что поле с телефоном должно быть заполнено", async({page}) => {
   const taxPage = new TaxPage(page);
   await expect(taxPage.phoneInput).toHaveAttribute("required");
@@ -115,4 +107,45 @@ test("Предупреждение о выборе филиала", async({page}
   await taxPage.clickFilialTab();
   await expect(taxPage.medicalOffice).toHaveAttribute("required");
   await expect(taxPage.medicalOffice).toHaveAttribute("customvaliditymessage", "Выберите удобный для вас филиал");
+});
+
+test("Блок родственника становится видимым при нажатии на кнопку добавления", async({page}) => {
+  const taxPage = new TaxPage(page);
+  await taxPage.addRelativeBtn.click();
+  await expect(taxPage.relativeBlock).toBeVisible();
+});
+
+test("Блок родственника скрывается при нажатии на кнопку удаления", async({page}) => {
+  const taxPage = new TaxPage(page);
+  await taxPage.addRelativeBtn.click();
+  await expect(taxPage.relativeBlock).toBeVisible();
+  await taxPage.deleteRelativeBlock.click();
+  await expect(taxPage.relativeBlock).not.toBeVisible();
+});
+
+test("Дата рождения ребенка", async({page}) => {
+  const taxPage = new TaxPage(page);
+  await taxPage.addRelativeBtn.click();
+
+  await page.locator(".add-relative__relative-block select").selectOption({value: "child"});
+  await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("required");
+  await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("customvaliditymessage", "Введите дату рождения вашего ребенка");
+});
+
+test("Дата рождение супруга(и)", async({page}) => {
+  const taxPage = new TaxPage(page);
+  await taxPage.addRelativeBtn.click();
+
+  await page.locator(".add-relative__relative-block select").selectOption({value: "spouse"});
+  await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("required");
+  await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("customvaliditymessage", "Введите дату рождения вашего супруга(и)");
+});
+
+test.only("Дата рождения родителя", async({page}) => {
+  const taxPage = new TaxPage(page);
+  await taxPage.addRelativeBtn.click();
+
+  await page.locator(".add-relative__relative-block select").selectOption({value: "parent"});
+  await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("required");
+  await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("customvaliditymessage", "Введите дату рождения вашего родителя");
 });

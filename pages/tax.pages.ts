@@ -21,6 +21,9 @@ export class TaxPage extends HeaderPage {
   readonly filialBtn: Locator;
   readonly filialCity: Locator;
   readonly medicalOffice: Locator;
+  readonly addRelativeBtn: Locator;
+  readonly relativeBlock: Locator;
+  readonly deleteRelativeBlock: Locator;
 
   constructor(page: Page,) {
     super(page);
@@ -44,6 +47,9 @@ export class TaxPage extends HeaderPage {
     this.filialBtn = page.locator(".uni-chip").getByText("филиал");
     this.filialCity = page.locator(".tax-form__select-obtaining-method select").nth(0);
     this.medicalOffice = page.locator(".tax-form__select-obtaining-method select").nth(1);
+    this.addRelativeBtn = page.getByRole("button", {name: "Добавить родственника"});
+    this.relativeBlock = page.locator(".add-relative__relative-block");
+    this.deleteRelativeBlock = page.getByRole("button", {name: "Удалить"});
   }
 
   async clickFilialTab() {
