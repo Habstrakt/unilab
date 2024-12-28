@@ -141,7 +141,7 @@ test("Дата рождение супруга(и)", async({page}) => {
   await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("customvaliditymessage", "Введите дату рождения вашего супруга(и)");
 });
 
-test.only("Дата рождения родителя", async({page}) => {
+test("Дата рождения родителя", async({page}) => {
   const taxPage = new TaxPage(page);
   await taxPage.addRelativeBtn.click();
 
@@ -149,3 +149,4 @@ test.only("Дата рождения родителя", async({page}) => {
   await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("required");
   await expect(page.locator("[placeholder='Дата рождения']").nth(1)).toHaveAttribute("customvaliditymessage", "Введите дату рождения вашего родителя");
 });
+

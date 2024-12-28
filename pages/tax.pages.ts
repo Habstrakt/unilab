@@ -24,6 +24,7 @@ export class TaxPage extends HeaderPage {
   readonly addRelativeBtn: Locator;
   readonly relativeBlock: Locator;
   readonly deleteRelativeBlock: Locator;
+  readonly typeOfRelationshipSelect: Locator;
 
   constructor(page: Page,) {
     super(page);
@@ -50,6 +51,8 @@ export class TaxPage extends HeaderPage {
     this.addRelativeBtn = page.getByRole("button", {name: "Добавить родственника"});
     this.relativeBlock = page.locator(".add-relative__relative-block");
     this.deleteRelativeBlock = page.getByRole("button", {name: "Удалить"});
+
+    this.typeOfRelationshipSelect = page.locator(".add-relative__relative-block select");
   }
 
   async clickFilialTab() {
