@@ -1,4 +1,4 @@
-import { type Page, type Locator } from '@playwright/test';
+import { type Page, type Locator, expect } from '@playwright/test';
 
 export class TaxPage {
   protected page: Page;
@@ -29,7 +29,23 @@ export class TaxPage {
     this.checkboxElements = page.locator(".uni-checkbox__input");
   }
 
-  async clickFilialTab() {
+  async clickFilialTab(): Promise<void> {
     this.filialBtn.click();
+  }
+
+  async checkCustomValidityMsg(htmlElements: any): Promise<void> {
+    await this.addRelativeBtn.click();
+    for(let i = 0; i < await htmlElements.count(); i++) {
+      const checkbox = htmlElements.nth(i);
+      expect(await checkbox.getAttribute("customvaliditymessage")).not.toBe("");
+    };
+  };
+
+  async checkRequiredAttribute(htmlElements: any) {
+    await this.addRelativeBtn.click();
+    for(let i = 0; i < await htmlElements.count(); i++) {
+      const checkbox = htmlElements.nth(i);
+      await expect(checkbox).toHaveAttribute("required");
+    };
   }
 }
