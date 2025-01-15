@@ -30,22 +30,40 @@ export class TaxPage {
   }
 
   async clickFilialTab(): Promise<void> {
-    this.filialBtn.click();
-  }
-
-  async checkCustomValidityMsg(htmlElements: any): Promise<void> {
-    await this.addRelativeBtn.click();
-    for(let i = 0; i < await htmlElements.count(); i++) {
-      const checkbox = htmlElements.nth(i);
-      expect(await checkbox.getAttribute("customvaliditymessage")).not.toBe("");
-    };
+    await this.filialBtn.click();
   };
 
-  async checkRequiredAttribute(htmlElements: any) {
+  async addRelative(): Promise<void> {
     await this.addRelativeBtn.click();
-    for(let i = 0; i < await htmlElements.count(); i++) {
-      const checkbox = htmlElements.nth(i);
-      await expect(checkbox).toHaveAttribute("required");
+  };
+
+  async deleteRelative(): Promise<void> {
+    await this.deleteRelativeBlock.click();
+  };
+
+  async checkCustomValidityMsg(htmlElements: Locator): Promise<boolean> {
+    const count = await htmlElements.count();
+    for(let i = 0; i < count; i++) {
+      const element = htmlElements.nth(i);
+      const validityMsg = await element.getAttribute("customvaliditymessage");
+
+      if(!validityMsg || validityMsg === "") {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  async checkRequiredAttribute(htmlElements: Locator): Promise<boolean> {
+    const count = await htmlElements.count()
+    for(let i = 0; i < count; i++) {
+      const element = htmlElements.nth(i);
+      const requiredAttribute = await element.getAttribute("required");
+
+      if(requiredAttribute === null) {
+        return false;
+      }
     };
-  }
+    return true;
+  };
 }
