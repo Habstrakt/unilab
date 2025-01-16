@@ -15,11 +15,14 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install dependencies and Playwright browsers
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npx playwright test --workers=4 --reporter=line,allure-playwright
+        run: npx playwright test --reporter=line,allure-playwright
 
       - name: Generate Allure report
         run: npx allure generate allure-results --clean -o allure-report
