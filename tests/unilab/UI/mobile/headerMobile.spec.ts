@@ -51,6 +51,7 @@ test("Анимация изменения ширины поля ввода по�
 	await headerPage.closePopUps();
 	await expect(page.locator(".search")).toHaveCSS("max-width", "100%");
 	await page.mouse.wheel(0, 500);
+	await page.waitForLoadState("load", { timeout: 5000 });
 	await expect(page.locator(".search")).not.toHaveCSS("max-width", "100%");
 });
 

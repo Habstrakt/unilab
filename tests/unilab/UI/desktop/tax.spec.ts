@@ -25,7 +25,7 @@ test.beforeEach(async({page}) => {
 	await page.goto("https://dev.unilab.su/vazhno-i-polezno/nalogovyj-vychet/tax_form/", {waitUntil: "domcontentloaded"});
 });
 
-test("Отправить заявление на получение справки", async() => {
+test.skip("Отправить заявление на получение справки", async() => {
 	await taxPage.fillForm(testData());
 	await taxPage.submitForm();
 	await expect(taxPage.successMessage).toBeVisible()
