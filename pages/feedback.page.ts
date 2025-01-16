@@ -6,6 +6,7 @@ export class FeedbackPage extends HomePage {
 	readonly charCountAttr: Locator;
   readonly orderInput: Locator;
   readonly orderToolTip: Locator;
+  readonly visitorPhoneInput: Locator;
 
   constructor(page: Page) {
     super(page)
@@ -13,5 +14,6 @@ export class FeedbackPage extends HomePage {
 		this.charCountAttr = page.locator("[data-char-count]");
     this.orderInput = page.locator("#id_order");
 		this.orderToolTip = page.getByText("Номер заказа должен начинаться с цифр: 25, 27, 45");
+    this.visitorPhoneInput = page.locator("#id_visitor_phone");
   }
 }

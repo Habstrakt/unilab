@@ -3,14 +3,18 @@ import { HeaderPage } from '../../../../pages/header.page';
 import { BasePage } from '../../../../pages/base.page';
 import { AddressPage } from '../../../../pages/addresses.page';
 
+let headerPage: HeaderPage;
+let basePage: BasePage;
+let addressPage: AddressPage;
+
 test.beforeEach(async({page}) => {
-	await page.goto("/", {waitUntil: "domcontentloaded"})
+	headerPage = new HeaderPage(page);
+	basePage = new BasePage(page);
+	addressPage = new AddressPage(page);
+	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("поле ввода даты формы на странице отзыва о филиале", async({page}) => {
-	const headerPage = new HeaderPage(page);
-	const basePage = new BasePage(page);
-	const addressPage = new AddressPage(page);
+test("поле ввода даты формы на странице отзыва о филиале", async() => {
 	await basePage.btnYes.click();
 	await headerPage.addresses.click();
 	await addressPage.clickRandomAddresses();
@@ -20,20 +24,12 @@ test("поле ввода даты формы на странице отзыва
 
 
 test("Работа фильтра на странице адресов", async({page}) => {
-	const headerPage = new HeaderPage(page);
-	const basePage = new BasePage(page);
 	await basePage.btnYes.click();
 	await headerPage.addresses.click();
-
-	await page.waitForTimeout(1000);
-	const adressesList =  page.locator(".addresses__item");
-	const adressesListCount = await adressesList.count();
-
-	await page.locator("#id_properties_1").click();
-
-	await page.waitForTimeout(1000);
-	const fillteredAddress = page.locator(".addresses__item");
-	const fillteredAddressCount = await fillteredAddress.count();
-
-	await expect(fillteredAddressCount).toBeLessThan(adressesListCount);
+	await page.waitForSelector(".addresses__item");
+	const initialAddressesCount = await addressPage.getAddressesCount();
+	await addressPage.applyFilter();
+	await page.waitForLoadState("load", { timeout: 5000 });
+	const filteredAddressesCount = await addressPage.getAddressesCount();
+	await expect(filteredAddressesCount).toBeLessThan(initialAddressesCount);
 });

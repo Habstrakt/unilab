@@ -2,14 +2,16 @@ import { test, expect } from '@playwright/test';
 import { HeaderPage } from '../../../../pages/header.page';
 import { FeedbackPage } from "../../../../pages/feedback.page";
 
+let headerPage: HeaderPage;
+let feedBackPage: FeedbackPage;
+
 test.beforeEach(async({page}) => {
-	await page.goto("/", {waitUntil: "domcontentloaded"});
+	headerPage = new HeaderPage(page);
+	feedBackPage = new FeedbackPage(page);
+	await page.goto("https://dev.unilab.su/", {waitUntil: "domcontentloaded"});
 });
 
-test("Подсчет количества введенных символов в поле ввода текста оставить отзыв", async({page}) => {
-	const headerPage = new HeaderPage(page);
-	const feedBackPage = new FeedbackPage(page);
-
+test("Подсчет количества введенных символов в поле ввода текста оставить отзыв", async() => {
 	const text = "Пример текста для проверки подсчета символов";
 	await headerPage.openFeedBack();
 	await feedBackPage.textArea.fill(text);
@@ -18,47 +20,28 @@ test("Подсчет количества введенных символов в
 });
 
 test("отображение подсказки поля ввода номера заказа оставить отзыв", async({page}) => {
-	const headerPage = new HeaderPage(page);
-	const feedBackPage = new FeedbackPage(page);
 	await headerPage.openFeedBack();
-	await page.waitForTimeout(1000);
+	await page.waitForLoadState("load", { timeout: 5000 });
 	await feedBackPage.orderInput.fill("1");
 	await expect(feedBackPage.orderToolTip).toBeVisible();
 });
 
 test("Маска ввода номера телефона на странице 'оставить отзыв'", async({page}) => {
-	const headerPage = new HeaderPage(page);
 	await headerPage.openFeedBack();
-
-	const visitorPhone = page.locator("#id_visitor_phone");
-	await page.waitForTimeout(1000);
-	await visitorPhone.fill("9");
-	expect(await visitorPhone.getAttribute("data-value")).toContain("79");
+	await page.waitForLoadState("load", { timeout: 5000 });
+	await feedBackPage.visitorPhoneInput.fill("9");
+	expect(await feedBackPage.visitorPhoneInput.getAttribute("data-value")).toContain("79");
 });
 
 test("Удалить номер телефона на странице 'оставить отзыв'", async({page}) => {
-	const headerPage = new HeaderPage(page);
 	await headerPage.openFeedBack();
-	const visitorPhone = page.locator("#id_visitor_phone");
-	await visitorPhone.fill("9146575925");
-	await visitorPhone.click();
+	await feedBackPage.visitorPhoneInput.fill("9146575925");
+	await feedBackPage.visitorPhoneInput.click();
 	await page.keyboard.press("End");
-
-	for(let i = 0; i <= (await visitorPhone.inputValue()).length; i++) {
+	await page.waitForLoadState("load", { timeout: 5000 });
+	for(let i = 0; i <= (await feedBackPage.visitorPhoneInput.inputValue()).length; i++) {
 		await page.keyboard.press("Backspace");
-		if(await visitorPhone.getAttribute("data-value") == "7") break;
+		if(await feedBackPage.visitorPhoneInput.getAttribute("data-value") == "7") break;
 	};
-	expect(await visitorPhone.getAttribute("data-value")).toContain("7");
+	expect(await feedBackPage.visitorPhoneInput.getAttribute("data-value")).toContain("7");
 });
-
-// test("выделить номер телефона", async({page}) => {
-// 	const headerElement = new Header(page);
-// 	//const feedBackElement = new Feedback(page);
-// 	await headerElement.openFeedBack();
-// 	const visitorPhone = page.locator("#id_visitor_phone");
-// 	await expect (visitorPhone).toBeVisible();
-// 	await visitorPhone.fill("9146575925");
-// 	await page.keyboard.press("Control+A");
-// 	await page.keyboard.press("Backspace");
-// 	await page.locator("#id_visitor_message").fill("check!");
-// });

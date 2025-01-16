@@ -3,34 +3,34 @@ import { BasePage } from "../../../../pages/base.page";
 import { HeaderPage } from "../../../../pages/header.page";
 import { CollectionPage } from '../../../../pages/сollection.page';
 
+let basePage: BasePage;
+let headerPage: HeaderPage;
+let collectionPage: CollectionPage;
 
 test.beforeEach(async({page}) => {
+	basePage = new BasePage(page);
+	headerPage = new HeaderPage(page);
+	collectionPage = new CollectionPage(page);
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Работа кнопки 'в корзину' на странице 'анализы' в списке", async({page}) => {
-	const basePage = new BasePage(page);
-  const headerPage = new HeaderPage(page);
+test("Работа кнопки 'в корзину' на странице 'анализы' в списке", async() => {
 	await headerPage.analysisLink.click();
 	const serviceName = await basePage.clickRandomAddToCartButton();
-	await expect(page.locator(".service-item__toast")).toBeVisible();
+	await expect(collectionPage.addToCartPopUp).toBeVisible();
 	await basePage.serviceName.click();
-	await expect(page.locator(".cart-item__title")).toContainText(serviceName!);
+	await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
 });
 
-test("Работа кнопки 'в корзину' на странице 'мед услуги' в списке", async({page}) => {
-	const basePage = new BasePage(page);
-	const headerPage = new HeaderPage(page);
+test("Работа кнопки 'в корзину' на странице 'мед услуги' в списке", async() => {
 	await headerPage.medicalServicesLink.click();
 	const serviceName = await basePage.clickRandomAddToCartButton();
-	await expect(page.locator(".service-item__toast")).toBeVisible();
+	await expect(collectionPage.addToCartPopUp).toBeVisible();
 	await basePage.serviceName.click();
-	await expect(page.locator(".cart-item__title")).toContainText(serviceName!);
+	await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
 });
 
-test("Переключение табов на странице услуг", async({page}) => {
-	const headerPage = new HeaderPage(page);
-	const collectionPage = new CollectionPage(page);
+test("Переключение табов на странице услуг", async() => {
 	await headerPage.analysisLink.click();
 	await collectionPage.clickToTab();
 });

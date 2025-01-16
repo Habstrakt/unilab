@@ -25,18 +25,18 @@ export class BasePage {
     this.serviceName = page.locator(".header__cart-link");
   }
 
-  async closePopUps() {
+  async closePopUps(): Promise<void> {
 		await this.btnNo.click();
 		await this.closePopUpBtn.click();
 		await this.btnCookieAccept.click();
 	};
 
-  async clickRandomAddToCartButton() {
+  async clickRandomAddToCartButton(): Promise<string> {
     const btnCount = await this.addToCartButtons.count();
     const randomIndex = Math.floor(Math.random() * btnCount);
     const randomBtn = this.addToCartButtons.nth(randomIndex);
     const serviceName = await this.page.locator(".service-item__title-text").nth(randomIndex).textContent();
     await randomBtn.click();
-    return serviceName;
+    return serviceName!;
   };
 };

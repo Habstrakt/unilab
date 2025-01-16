@@ -17,13 +17,13 @@ export class CartPage extends BasePage {
     this.clearCartBtn = page.getByRole("button", {name: "Очистить корзину"});
   }
 
-  async addToCart() {
+  async addToCart(): Promise<void> {
     const productPage = new ProductPage(this.page);
     const headerPage = new HeaderPage(this.page);
 
     await productPage.clickRandomMedicalServices();
     await this.addToCartBtn.click();
-    await headerPage.cartLink.click()
+    await headerPage.cartLink.click();
   }
 }
 

@@ -6,6 +6,8 @@ export class CollectionPage extends HeaderPage {
 	readonly serviceTypeItem: Locator;
 	readonly serviceTitleSection: Locator;
 	readonly addToCartBtn: Locator;
+	readonly addToCartPopUp: Locator;
+	readonly cartItemTitle: Locator;
 
 	constructor(page: Page) {
 		super(page);
@@ -13,9 +15,11 @@ export class CollectionPage extends HeaderPage {
 		this.serviceTypeItem = page.locator(".types-services__tab-item");
 		this.serviceTitleSection = page.locator(".service-title-section");
 		this.addToCartBtn = page.locator(".service-item__btn");
+		this.addToCartPopUp = page.locator(".service-item__toast");
+		this.cartItemTitle = page.locator(".cart-item__title");
 	};
 
-	async clickToTab() {
+	async clickToTab(): Promise<void> {
 		const count = this.serviceTypeItem.count();
 		for(let i = 1; i < await count; i++) {
 			await expect(this.serviceTypeItem.nth(i - 1)).toHaveClass(/active/);
@@ -26,23 +30,14 @@ export class CollectionPage extends HeaderPage {
 		};
 	};
 
-	async addToRandomService() {
+	async addToRandomService(): Promise<void> {
 		const medicalServiceCount = this.addToCartBtn.count();
 		const randomIndex = Math.floor(Math.random() * await medicalServiceCount);
 		const randomServices = this.addToCartBtn.nth(randomIndex);
 		await randomServices.click();
 	}
 
-	// async randomFilter() {
-	// 	const itemFilterCount = this.page.locator(".accordion-item").count();
-	// 	const randomIndex = Math.floor(Math.random() * await itemFilterCount);
-	// 	//const randomFilterItem = this.page.locator(".accordion-item").nth(randomIndex);
-	// 	const randomFilterItem = this.page.locator(`[data-bs-target="#Category-${randomIndex}"]`)
-	// 	await randomFilterItem.click();
-	// 	return randomFilterItem;
-	// }
-
-	async randomFilter() {
+	async randomFilter(): Promise<Locator> {
 		const itemFilterCount = await this.page.locator(".accordion-item").count();
     const randomIndex = Math.floor(Math.random() * itemFilterCount);
 
@@ -57,11 +52,4 @@ export class CollectionPage extends HeaderPage {
     await randomItem.click();
     return randomFilterItem;
 	}
-
-	// async randomService() {
-	// 	const itemFilterCount = this.page.locator(".accordion-item .filter__item").count();
-	// 	const randomIndex = Math.floor(Math.random() * await itemFilterCount);
-	// 	const randomServiceItem = this.page.locator(".accordion-item .filter__item").nth(randomIndex);;
-	// 	await randomServiceItem.click();
-	// }
 };
