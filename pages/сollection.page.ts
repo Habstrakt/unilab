@@ -6,7 +6,6 @@ export class CollectionPage extends HeaderPage {
 	readonly serviceTypeItem: Locator;
 	readonly serviceTitleSection: Locator;
 	readonly addToCartBtn: Locator;
-	readonly addToCartPopUp: Locator;
 	readonly cartItemTitle: Locator;
 
 	constructor(page: Page) {
@@ -15,7 +14,6 @@ export class CollectionPage extends HeaderPage {
 		this.serviceTypeItem = page.locator(".types-services__tab-item");
 		this.serviceTitleSection = page.locator(".service-title-section");
 		this.addToCartBtn = page.locator(".service-item__btn");
-		this.addToCartPopUp = page.locator(".service-item__toast");
 		this.cartItemTitle = page.locator(".cart-item__title");
 	};
 
@@ -35,7 +33,7 @@ export class CollectionPage extends HeaderPage {
 		const randomIndex = Math.floor(Math.random() * await medicalServiceCount);
 		const randomServices = this.addToCartBtn.nth(randomIndex);
 		await randomServices.click();
-	}
+	};
 
 	async randomFilter(): Promise<Locator> {
 		const itemFilterCount = await this.page.locator(".accordion-item").count();
@@ -51,5 +49,5 @@ export class CollectionPage extends HeaderPage {
 
     await randomItem.click();
     return randomFilterItem;
-	}
+	};
 };

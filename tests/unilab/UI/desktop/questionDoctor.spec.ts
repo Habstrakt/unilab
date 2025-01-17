@@ -2,14 +2,16 @@ import { test, expect } from '@playwright/test';
 import { HeaderPage } from '../../../../pages/header.page';
 import { QuestionDoctor } from '../../../../pages/questionDoctor.page';
 
+let headerPage: HeaderPage;
+let questionDoctor: QuestionDoctor;
+
 test.beforeEach(async({page}) => {
+	headerPage = new HeaderPage(page);
+	questionDoctor = new QuestionDoctor(page);
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Подсчет количества введенных символов в поле ввода текста вопросу доктору", async({page}) => {
-	const headerPage = new HeaderPage(page);
-	const questionDoctor = new QuestionDoctor(page);
-
+test("Подсчет количества введенных символов в поле ввода текста вопросу доктору", async() => {
 	const text = "Пример текста для проверки подсчета символов";
 	await headerPage.openQuestionDoctor();
 	await questionDoctor.textArea.fill(text);
@@ -18,9 +20,6 @@ test("Подсчет количества введенных символов в
 });
 
 test("отображение подсказки поля ввода номера заказа вопрос доктору", async({page}) => {
-	const headerPage = new HeaderPage(page);
-	const questionDoctor = new QuestionDoctor(page);
-
 	await headerPage.openQuestionDoctor();
 	await page.waitForTimeout(1000);
 	await questionDoctor.orderInput.fill("1");

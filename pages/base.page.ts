@@ -13,6 +13,8 @@ export class BasePage {
 
   readonly serviceName: Locator;
 
+  readonly addToCartPopUp: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.btnNo = page.locator(".btn-no-js");
@@ -23,6 +25,7 @@ export class BasePage {
     this.addToCartBtn = page.locator(".btn-to-cart");
     this.addToCartButtons = page.locator(".service-item__btn");
     this.serviceName = page.locator(".header__cart-link");
+    this.addToCartPopUp = page.locator(".service-item__toast");
   }
 
   async closePopUps(): Promise<void> {

@@ -17,7 +17,7 @@ test.beforeEach(async({page}) => {
 test("Работа кнопки 'в корзину' на странице 'анализы' в списке", async() => {
 	await headerPage.analysisLink.click();
 	const serviceName = await basePage.clickRandomAddToCartButton();
-	await expect(collectionPage.addToCartPopUp).toBeVisible();
+	await expect(basePage.addToCartPopUp).toBeVisible();
 	await basePage.serviceName.click();
 	await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
 });
@@ -25,7 +25,7 @@ test("Работа кнопки 'в корзину' на странице 'ан�
 test("Работа кнопки 'в корзину' на странице 'мед услуги' в списке", async() => {
 	await headerPage.medicalServicesLink.click();
 	const serviceName = await basePage.clickRandomAddToCartButton();
-	await expect(collectionPage.addToCartPopUp).toBeVisible();
+	await expect(basePage.addToCartPopUp).toBeVisible();
 	await basePage.serviceName.click();
 	await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
 });

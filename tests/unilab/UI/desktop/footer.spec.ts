@@ -1,12 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { FooterPage } from '../../../../pages/footer.page';
 
+let footerPage: FooterPage;
+
 test.beforeEach(async({page}) => {
+	footerPage = new FooterPage(page);
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Отображение всплывающего окна подписаться на новости и акции", async({page}) => {
-	const footerPage = new FooterPage(page);
+test("Отображение всплывающего окна подписаться на новости и акции", async() => {
 	await footerPage.subscribeBtn.click();
 	await expect(footerPage.subscribeBtn).toBeVisible();
 	await expect(footerPage.subscribeInput).toBeVisible();

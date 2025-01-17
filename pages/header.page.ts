@@ -59,18 +59,18 @@ export class HeaderPage extends BasePage {
 		this.addresses = page.locator("#navbarScroll").getByRole("link", {name: "Адреса"});
 	}
 
-	async openFeedBack(){
+	async openFeedBack(): Promise<void>{
 		await this.navBarDropDown.click();
 		await this.btnFeedBack.click();
 	};
 
-	async openQuestionDoctor(){
+	async openQuestionDoctor(): Promise<void>{
 		await this.navBarDropDown.click();
 		await this.btnQuestionDoctor.click();
 		await this.questionFormLink.click();
 	};
 
-	async serviceSearch(text: string) {
+	async serviceSearch(text: string): Promise<void> {
 		await this.headerSearch.fill(text);
 		await this.page.keyboard.press("Enter");
 	}

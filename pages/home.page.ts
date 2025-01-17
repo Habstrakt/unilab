@@ -37,7 +37,7 @@ export class HomePage extends BasePage {
 		this.complexSliderItems = page.locator("#C .top-services__slide-title");
 	};
 
-	async visibleSliderItem(locator: Locator) {
+	async visibleSliderItem(locator: Locator): Promise<void> {
 		const count = await locator.count();
 		for(let i = 0; i < count; i++) {
 			await expect(locator.nth(i)).toBeVisible();

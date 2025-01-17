@@ -8,7 +8,6 @@ test.fixme("success online record", async({page}) => {
 
   const onlineRecordBtn = page.getByRole("button", {name: "Записаться"});
 
-
   const btnCount = await onlineRecordBtn.count();
   const randomIndex = Math.floor(Math.random() * btnCount);
   const randomBtn = onlineRecordBtn.nth(randomIndex);
@@ -24,7 +23,7 @@ test.fixme("success online record", async({page}) => {
   await page.locator("[placeholder='Дата рождения']").fill("1990-09-21");
   await page.locator('#recaptcha-anchor').click();
   await page.locator("#fmOnlineRecord").getByRole("button", {name: "Записаться"}).click();
-  
+
   await page.waitForTimeout(2000);
 });
 

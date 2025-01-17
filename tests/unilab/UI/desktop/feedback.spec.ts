@@ -8,7 +8,7 @@ let feedBackPage: FeedbackPage;
 test.beforeEach(async({page}) => {
 	headerPage = new HeaderPage(page);
 	feedBackPage = new FeedbackPage(page);
-	await page.goto("https://dev.unilab.su/", {waitUntil: "domcontentloaded"});
+	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
 test("Подсчет количества введенных символов в поле ввода текста оставить отзыв", async() => {
@@ -21,14 +21,14 @@ test("Подсчет количества введенных символов в
 
 test("отображение подсказки поля ввода номера заказа оставить отзыв", async({page}) => {
 	await headerPage.openFeedBack();
-	await page.waitForLoadState("load", { timeout: 5000 });
+	await page.waitForTimeout(1000);
 	await feedBackPage.orderInput.fill("1");
 	await expect(feedBackPage.orderToolTip).toBeVisible();
 });
 
 test("Маска ввода номера телефона на странице 'оставить отзыв'", async({page}) => {
 	await headerPage.openFeedBack();
-	await page.waitForLoadState("load", { timeout: 5000 });
+	await page.waitForTimeout(1000);
 	await feedBackPage.visitorPhoneInput.fill("9");
 	expect(await feedBackPage.visitorPhoneInput.getAttribute("data-value")).toContain("79");
 });
