@@ -23,17 +23,37 @@ test.beforeEach(async({page}) => {
 });
 
 test("Переключение табов при выборе результата в селектах на странице мед услуг", async() => {
-  await basePage.btnYes.tap();
-  await headerPage.burgerMenuBtn.tap();
-  await headerPage.medicalServicesLink.tap();
-  await productPage.medicalServices.nth(0).click();
-  await productPage.clickTabItemMobile();
+  await test.step("Тапнуть на кнопку 'Да' в попапе определения города", async() => {
+    await basePage.btnYes.tap();
+  });
+  await test.step("Тапнуть на бургер-меню", async() => {
+    await headerPage.burgerMenuBtn.tap();
+  })
+  await test.step("Перейти в раздел 'Мед услуги'", async() => {
+    await headerPage.medicalServicesLink.tap();
+  });
+  await test.step("Выбрать первую услугу из списка", async() => {
+    await productPage.medicalServices.nth(0).click();
+  });
+  await test.step("Проверить что табы раскрываются в мобильной версии", async() => {
+    await productPage.clickTabItemMobile();
+  });
 });
 
 test("Переключение табов при выборе результата в селектах на странице анализов", async() => {
-  await basePage.btnYes.tap();
-  await headerPage.burgerMenuBtn.tap();
-  await headerPage.analysisLink.tap();
-  await productPage.medicalServices.nth(0).click();
-  await productPage.clickTabItemMobile();
+  await test.step("Тапнуть на кнопку 'Да' в попапе определения города", async() => {
+    await basePage.btnYes.tap();
+  });
+  await test.step("Тапнуть на бургер-меню", async() => {
+    await headerPage.burgerMenuBtn.tap();
+  })
+  await test.step("Перейти в раздел 'Анализы'", async() => {
+    await headerPage.analysisLink.tap();
+  });
+  await test.step("Выбрать первый анализ из списка", async() => {
+    await productPage.medicalServices.nth(0).click();
+  });
+  await test.step("Проверить что табы раскрываются в мобильной версии", async() => {
+    await productPage.clickTabItemMobile();
+  });
 });

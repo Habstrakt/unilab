@@ -1,4 +1,5 @@
-import { test, devices, expect } from '@playwright/test';
+import { test, devices, expect, Locator } from '@playwright/test';
+import { FooterPage } from '../../../../pages/footer.page.ts';
 
 test.use({
 	locale: "ru-RU",
@@ -8,16 +9,26 @@ test.use({
 	isMobile: true
 });
 
+let footerPage: FooterPage;
+
 test.beforeEach(async({page}) => {
+	footerPage = new FooterPage(page);
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Работа аккордеона в футтере в мобильной версии", async({page}) => {
-	const navItemsTitle = await page.locator(".footer__nav-title").all();
-	const navItems = page.locator(".footer__nav-item");
+test("Работа аккордеона в футтере в мобильной версии", async() => {
+	let navItemsTitle: Locator[] = [];
+	let navItems: Locator;
+
+	await test.step("Получить заголовки и элементы аккордеона", async() => {
+		navItemsTitle = await footerPage.navTitle.all();
+		navItems = footerPage.navItem;
+	});
 
 	for(const [i, navTitle] of navItemsTitle.entries()) {
-		await navTitle.click()
-		await expect(navItems.nth(i)).toHaveClass(/open/);
+		await test.step(`Кликнуть на заголовок и проверить открытие элемента ${i + 1}`, async() => {
+			await navTitle.click();
+			await expect(navItems.nth(i)).toHaveClass(/open/);
+		});
 	};
 });

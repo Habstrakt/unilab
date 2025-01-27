@@ -25,9 +25,8 @@ export class AddressPage extends HeaderPage {
 	};
 
 	async todayDate(): Promise<void> {
-		const today = new Date();
-		const formattedDate = today.toISOString().split("T")[0];
-		await this.visitorDate.fill(formattedDate);
+		const today = new Date().toISOString().split("T")[0];
+		await this.visitorDate.fill(today);
 	};
 
 	async getAddressesCount(): Promise<number> {

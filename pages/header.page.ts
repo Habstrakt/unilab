@@ -8,6 +8,7 @@ export class HeaderPage extends BasePage {
 	readonly headerSearch: Locator;
 	readonly headerSearchResult: Locator;
 	readonly headerSearchResultItem: Locator;
+	readonly searchResult: Locator;
 	readonly selectCity: Locator;
 	readonly searchCityInput: Locator;
 	readonly headerCityLink: Locator;
@@ -15,6 +16,8 @@ export class HeaderPage extends BasePage {
 	readonly burgerMenuBtn: Locator;
 	readonly notFoundCity: Locator;
 	readonly cartLink: Locator;
+	readonly searchResultList: Locator;
+	readonly noResultSearch: Locator;
 
 	readonly analysisLink: Locator;
 	readonly medicalServicesLink: Locator;
@@ -35,8 +38,8 @@ export class HeaderPage extends BasePage {
 		this.blindPopUp = page.getByRole("button", {name: "Для слабовидящих"});
 		this.blindVersionPanel = page.locator("#blindVersionPanel");
 		this.headerSearch = page.locator("#searchOnSite");
-		this.headerSearchResult = page.locator(".header__search-result");
-		this.headerSearchResultItem = page.locator(".search-result__item");
+		this.headerSearchResult = page.locator("#search-results");
+		this.noResultSearch = page.locator(".search-result__no-result");
     this.selectCity = page.locator("#selectCity");
 		this.searchCityInput = page.locator("#searchCityInput");
 		this.headerCityLink = page.locator(".header__city-link");
@@ -44,6 +47,8 @@ export class HeaderPage extends BasePage {
 		this.burgerMenuBtn = page.locator("#headerBurgerBtn");
 		this.notFoundCity = page.locator(".select-city__not-found-popup");
 		this.cartLink = page.locator(".header__cart-link");
+		this.searchResultList = page.locator(".search-result__list");
+		this.searchResult = page.locator(".header__search-result");
 
 		this.analysisLink = page.locator("#navbarScroll").getByRole("link", { name: "Анализы" });
 		this.medicalServicesLink = page.locator("#navbarScroll").getByRole("link", { name: "Мед. услуги" });

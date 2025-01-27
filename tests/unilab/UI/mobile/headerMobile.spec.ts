@@ -16,83 +16,177 @@ test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Открытие бургер-меню в мобильной версии", async ({page}) => {
-	await headerPage.burgerMenuBtn.tap();
-	await expect(page.locator("#headerBurgerBtn")).toHaveClass(/burger_open/);
+test("Открытие бургер-меню в мобильной версии", async () => {
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Проверить что бургер-меню открыто", async() => {
+		await expect(headerPage.burgerMenuBtn).toHaveClass(/burger_open/);
+	});
 });
 
-test("Закрытие бургер-меню в мобильной версии", async({page}) => {
-	await headerPage.burgerMenuBtn.tap();
-	await expect(page.locator("#headerBurgerBtn")).toHaveClass(/burger_open/);
-	await headerPage.burgerMenuBtn.tap();
-	await expect(page.locator("#headerBurgerBtn")).not.toHaveClass(/burger_open/);
+test("Закрытие бургер-меню в мобильной версии", async() => {
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Проверить что бургер-меню открыто",  async() => {
+		await expect(headerPage.burgerMenuBtn).toHaveClass(/burger_open/);
+	});
+	await test.step("Тапнуть на бургер-меню еще раз" , async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Проверить что бургер-меню закрыто", async() => {
+		await expect(headerPage.burgerMenuBtn).not.toHaveClass(/burger_open/);
+	});
 });
 
 test("Работа переключателя темной/светлой версии в бургер-меню в мобильной версии", async({page}) => {
-	await headerPage.burgerMenuBtn.tap();
-	await headerPage.themeSwitcher.tap();
-	await expect(page.locator("body")).toHaveClass(/theme-dark/);
-	await headerPage.themeSwitcher.tap();
-	await expect(page.locator("body")).not.toHaveClass(/theme-dark/);
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Тапнуть на ползунок изменения цветовой темы" , async() => {
+		await headerPage.themeSwitcher.tap();
+	})
+	await test.step("Проверить что тема изменена на темную", async() => {
+		await expect(page.locator("body")).toHaveClass(/theme-dark/);
+	});
+	await test.step("Тапнуть на ползунок цветовой схемы еще раз", async() => {
+		await headerPage.themeSwitcher.tap();
+	});
+	await test.step("Проверить что тема изменена на светлую", async() => {
+		await expect(page.locator("body")).not.toHaveClass(/theme-dark/);
+	});
 });
 
 test("Отсутствие скролла страници при открытом бургер-меню в мобильной версии", async({page}) => {
-	await headerPage.burgerMenuBtn.tap();
-	await expect(page.locator("#navbarScroll")).not.toHaveClass(/navbar_scrollable/);
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Проверить что скролл страницы отсутствует", async() => {
+		await expect(page.locator("#navbarScroll")).not.toHaveClass(/navbar_scrollable/);
+	});
 });
 
 test("Анимация изменения ширины поля ввода поиска при фокусе в мобильной версии", async({page}) => {
-	await headerPage.closePopUps();
-	await expect(page.locator(".search")).toHaveCSS("max-width", "100%");
-	await page.mouse.wheel(0, 500);
-	await page.waitForTimeout(1000);
-	await expect(page.locator(".search")).not.toHaveCSS("max-width", "100%");
+	await test.step("Закрыть всплывающее окно", async() => {
+		await headerPage.closePopUps();
+	});
+	await test.step("Проверить что поле поиска имеет максимальную ширину", async() => {
+		await expect(page.locator(".search")).toHaveCSS("max-width", "100%");
+	});
+	await test.step("Проскролить страницу вниз на 500px", async() => {
+		await page.mouse.wheel(0, 500);
+	});
+	await test.step("Дождаться прогрузки js-скрипта", async() => {
+		await page.waitForTimeout(1000);
+	});
+	await test.step("Проверить что поле поиска изменило ширину", async() => {
+		await expect(page.locator(".search")).not.toHaveCSS("max-width", "100%");
+	});
 });
 
 test("Отображение меню выбора города в мобильной версии", async() => {
-	await headerPage.closePopUps();
-	await headerPage.burgerMenuBtn.tap();
-	await headerPage.headerCityLinkMobile.tap();
-	await expect(headerPage.selectCity).toBeVisible();
+	await test.step("Закрыть всплывающее окно", async() => {
+		await headerPage.closePopUps();
+	});
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Тапнуть на ссылку выбора города", async() => {
+		await headerPage.headerCityLinkMobile.tap();
+	});
+	await test.step("Проверить что меню выбора города отобржается", async() => {
+		await expect(headerPage.selectCity).toBeVisible();
+	});
 });
 
 test("Выбор города в мобильной версии", async({page}) => {
-	await headerPage.closePopUps();
-	await headerPage.burgerMenuBtn.tap();
-	await headerPage.headerCityLinkMobile.tap();
-	await page.locator("[data-slag-city='ussuriisk']").tap();
-	await headerPage.burgerMenuBtn.tap();
-	await expect(headerPage.headerCityLinkMobile).toContainText("Уссурийск");
+	await test.step("Закрыть всплывающее окно", async() => {
+		await headerPage.closePopUps();
+	});
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Тапнуть на ссылку выбора города", async() => {
+		await headerPage.headerCityLinkMobile.tap();
+	});
+	await test.step("Выбрать город 'Уссурийск'", async() => {
+		await page.locator("[data-slag-city='ussuriisk']").tap();
+	});
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Проверить что в бургер меню отображается город 'Уссурийск'", async() => {
+		await expect(headerPage.headerCityLinkMobile).toContainText("Уссурийск");
+	});
 });
 
 test("Поиск города в мобильной версии", async({page}) => {
-	await headerPage.closePopUps();
-	await headerPage.burgerMenuBtn.tap();
-	await headerPage.headerCityLinkMobile.tap();
-	await headerPage.searchCityInput.fill("Хаба");
-	await expect(page.locator("[data-slag-city='khabarovsk']")).toContainText("Хабаровск");
+	await test.step("Закрыть всплывающее окно", async() => {
+		await headerPage.closePopUps();
+	});
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Тапнуть на ссылку выбора города", async() => {
+		await headerPage.headerCityLinkMobile.tap();
+	});
+	await test.step("Ввести текст 'Хаба' в поле поиска города", async() => {
+		await headerPage.searchCityInput.fill("Хаба");
+	});
+	await test.step("Проверить что город 'Хабаровск' отображается в результатах поиска", async() => {
+		await expect(page.locator("[data-slag-city='khabarovsk']")).toContainText("Хабаровск");
+	});
 });
 
-test("Отсутствие результата поиска города", async({page}) => {
-	await headerPage.closePopUps();
-	await headerPage.burgerMenuBtn.tap();
-	await headerPage.headerCityLinkMobile.tap();
-	await headerPage.searchCityInput.fill("Москва");
-	await expect(headerPage.searchCityInput).toHaveClass("error");
-	await expect(headerPage.notFoundCity).toContainText("Ничего не найдено. Попробуйте изменить запрос.");
+test("Отсутствие результата поиска города", async() => {
+	await test.step("Закрыть всплывающее окно", async() => {
+		await headerPage.closePopUps();
+	});
+	await test.step("Тапнуть на бургер-меню", async() => {
+		await headerPage.burgerMenuBtn.tap();
+	});
+	await test.step("Тапнуть на ссылку выбора города", async() => {
+		await headerPage.headerCityLinkMobile.tap();
+	});
+	await test.step("ВВести текст 'Москва' в поле поиска города", async() => {
+		await headerPage.searchCityInput.fill("Москва");
+	});
+	await test.step("Проверить что поле поиска имеет класс 'error'", async() => {
+		await expect(headerPage.searchCityInput).toHaveClass("error");
+	});
+	await test.step("Проверить что отображается сообщение 'Ничего не найдено. Попробуйте изменить запрос.'", async() => {
+		await expect(headerPage.notFoundCity).toContainText("Ничего не найдено. Попробуйте изменить запрос.");
+	});
 });
 
-test("Отображение попапа результатов поиска при количестве введенных символов больше двух", async({page}) => {
-	await headerPage.closePopUps();
-	await headerPage.headerSearch.fill("ана");
-	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
-	await expect(headerPage.headerSearchResultItem.first()).toBeEnabled();
+test("Отображение попапа результатов поиска при количестве введенных символов больше двух", async() => {
+	await test.step("Закрыть всплывающее окно", async() => {
+		await headerPage.closePopUps();
+	});
+	await test.step("Ввести текст 'ана' в поле поиска", async() => {
+		await headerPage.headerSearch.fill("ана");
+	});
+	await test.step("Проверить что попап результатов поиска отображается", async() => {
+		await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
+	});
+	await test.step("Проверить что в попапе результатов поиска отображается хотя бы один элемент", async() => {
+		await expect(headerPage.headerSearchResultItem.first()).toBeEnabled();
+	});
 });
 
 test("негативное Отображение попапа результатов поиска", async({page}) => {
-	await headerPage.closePopUps();
-	await headerPage.headerSearch.fill("fyf");
-	await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
-	await expect(page.locator(".search-result__no-result")).toBeVisible()
+	await test.step("Закрыть всплывающее окно", async() => {
+		await headerPage.closePopUps();
+	});
+	await test.step("Ввести текст 'fyf' в поле поиска", async() => {
+		await headerPage.headerSearch.fill("fyf");
+	});
+	await test.step("Проверить что попап результатов поиска отображается", async() => {
+		await expect(headerPage.headerSearchResult).toHaveClass(/header__search-result_show/);
+	});
+	await test.step("Проверить что отображается сообщение об отсутствии результатов поиска", async() => {
+		await expect(page.locator(".search-result__no-result")).toBeVisible()
+	});
 });
 

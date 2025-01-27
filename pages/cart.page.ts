@@ -8,6 +8,7 @@ export class CartPage extends BasePage {
   readonly title: Locator;
   readonly subTitle: Locator;
   readonly clearCartBtn: Locator;
+  readonly cartItemTitle: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -15,6 +16,7 @@ export class CartPage extends BasePage {
     this.title = this.page.locator("#cartDetail > div > div").nth(0);
     this.subTitle = page.locator("#cartDetail > div > div").nth(1);
     this.clearCartBtn = page.getByRole("button", {name: "Очистить корзину"});
+    this.cartItemTitle = page.locator(".cart-item__title");
   }
 
   async addToCart(): Promise<void> {

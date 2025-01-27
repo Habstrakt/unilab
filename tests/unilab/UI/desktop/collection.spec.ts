@@ -15,19 +15,37 @@ test.beforeEach(async({page}) => {
 });
 
 test("Работа кнопки 'в корзину' на странице 'анализы' в списке", async() => {
-	await headerPage.analysisLink.click();
-	const serviceName = await basePage.clickRandomAddToCartButton();
-	await expect(basePage.addToCartPopUp).toBeVisible();
-	await basePage.serviceName.click();
-	await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
+	let serviceName: string;
+	await test.step("Перейти в раздел 'Анализы'", async() => {
+		await headerPage.analysisLink.click();
+	});
+	await test.step("Добавить случайную услугу в корзину", async() => {
+		serviceName = await basePage.clickRandomAddToCartButton();
+		await expect(basePage.addToCartPopUp).toBeVisible();
+	});
+	await test.step("Перейти в корзину", async() => {
+		await basePage.serviceName.click();
+	});
+	await test.step("Проверить что добавленная услуга отображается в корзине", async() => {
+		await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
+	});
 });
 
 test("Работа кнопки 'в корзину' на странице 'мед услуги' в списке", async() => {
-	await headerPage.medicalServicesLink.click();
-	const serviceName = await basePage.clickRandomAddToCartButton();
-	await expect(basePage.addToCartPopUp).toBeVisible();
-	await basePage.serviceName.click();
-	await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
+	let serviceName: string;
+	await test.step("Перейти в разде 'Мед. Услуги'", async() => {
+		await headerPage.medicalServicesLink.click();
+	});
+	await test.step("Добавить случайную услугу в корзину", async() => {
+		serviceName = await basePage.clickRandomAddToCartButton();
+		await expect(basePage.addToCartPopUp).toBeVisible();
+	});
+	await test.step("Перейти в корзину", async() => {
+		await basePage.serviceName.click();
+	});
+	await test.step("Проверить что добавленная услуга отображается в корзине", async() => {
+		await expect(collectionPage.cartItemTitle).toContainText(serviceName!);
+	});
 });
 
 test("Переключение табов на странице услуг", async() => {

@@ -12,6 +12,6 @@ export class QuestionDoctor extends HomePage{
 		this.textArea = page.locator("#id_visitor_message");
 		this.charCountAttr = page.locator("[data-char-count]");
     this.orderInput = page.locator("#id_order");
-		this.orderToolTip = page.getByText('Номер заказа должен начинаться с цифр: 25, 27, 45');
+		this.orderToolTip = page.getByText("Номер заказа должен начинаться с цифр: 25, 27, 45");
 	}
 }
