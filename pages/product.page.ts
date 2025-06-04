@@ -2,7 +2,6 @@ import { type Page, type Locator, expect } from '@playwright/test';
 import { BasePage } from './base.page';
 
 export class ProductPage extends BasePage {
-  protected: Page
 	readonly medicalServices: Locator;
 	readonly tabItem: Locator;
 	readonly accordionItem: Locator;
@@ -29,7 +28,7 @@ export class ProductPage extends BasePage {
 		};
 	};
 
-	async clickTabItemMobile() {
+	async clickTabItemMobile(): Promise<void> {
 		const tabItem = this.accordionItem;
 		for(let i = 0; i < await tabItem.count(); i++) {
 			await tabItem.nth(i).tap();

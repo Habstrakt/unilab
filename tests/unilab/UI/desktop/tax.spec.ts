@@ -27,7 +27,7 @@ test.beforeEach(async({page}) => {
 	});
 });
 
-test.skip("Отправить заявление на получение справки", async() => {
+test.only("Отправить заявление на получение справки", async() => {
 	await test.step("Заполнить форму данными", async() => {
 		await taxPage.fillForm(testData());
 	});
@@ -78,7 +78,7 @@ const testRelativeFields = (relationshipType: string, fields: string[]) => {
 	});
 };
 
-testRelativeFields("child", [
+testRelativeFields("child_under_14", [
   "Введите фамилию, имя, отчество вашего ребенка полностью",
 	"Введите дату рождения вашего ребенка",
   "Введите серию свидетельства о рождении вашего ребенка",
@@ -105,49 +105,49 @@ testRelativeFields("parent", [
   "Введите дату выдачи  паспорта вашего родителя"
 ]);
 
-test("Проверка атрибута required для всех полей ввода input", async() => {
+test("Проверить атрибут required для всех полей ввода input", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkRequiredAttribute(taxPage.inputElements);
 	expect(isValid).toBe(true);
 });
 
-test("Проверка атрибута customvaliditymessage для всех полей ввода input", async() => {
+test("Проверить атрибут customvaliditymessage для всех полей ввода input", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkCustomValidityMsg(taxPage.inputElements);
 	expect(isValid).toBe(true);
 });
 
-test("Проверка атрибута required для всех полей ввода textarea", async() => {
+test("Проверить атрибут required для всех полей ввода textarea", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkRequiredAttribute(taxPage.inputElements);
 	expect(isValid).toBe(true);
 });
 
-test("Проверка атрибута customvaliditymessage для всех полей ввода textarea", async() => {
+test("Проверить атрибут customvaliditymessage для всех полей ввода textarea", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkCustomValidityMsg(taxPage.inputElements);
 	expect(isValid).toBe(true);
 });
 
-test("Проверка атрибута required для select", async() => {
+test("Проверить атрибут required для select", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkRequiredAttribute(taxPage.inputElements);
 	expect(isValid).toBe(true);
 });
 
-test("Проверка атрибута customvaliditymessage для select", async() => {
+test("Проверить атрибут customvaliditymessage для select", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkCustomValidityMsg(taxPage.inputElements);
 	expect(isValid).toBe(true);
 });
 
-test("Проверка атрибута required у checkbox", async() => {
+test("Проверить атрибут required у checkbox", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkRequiredAttribute(taxPage.inputElements);
 	expect(isValid).toBe(true);
 });
 
-test("Проверка атрибута customvaliditymessage у checkbox", async() => {
+test("Проверить атрибут customvaliditymessage у checkbox", async() => {
 	await taxPage.addRelative();
 	const isValid = await taxPage.checkCustomValidityMsg(taxPage.inputElements);
 	expect(isValid).toBe(true);

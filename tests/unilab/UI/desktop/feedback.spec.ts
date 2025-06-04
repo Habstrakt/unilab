@@ -12,7 +12,7 @@ test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Подсчет количества введенных символов в поле ввода текста оставить отзыв", async() => {
+test("Проверить подсчет количества введенных символов в поле ввода текста оставить отзыв", async() => {
 	const text = faker.lorem.text()
 	await test.step("Перейти на страницу 'Оставить отзыв'", async() => {
 		await headerPage.openFeedBack();
@@ -25,7 +25,7 @@ test("Подсчет количества введенных символов в
 	});
 });
 
-test("отображение подсказки поля ввода номера заказа оставить отзыв", async({page}) => {
+test("Проверить отображение подсказки поля ввода номера заказа оставить отзыв", async({page}) => {
 	await test.step("Перейти на страницу 'Оставить отзыв'", async() => {
 		await headerPage.openFeedBack();
 	});
@@ -40,7 +40,7 @@ test("отображение подсказки поля ввода номера
 	});
 });
 
-test("Маска ввода номера телефона на странице 'оставить отзыв'", async({page}) => {
+test("Проверить маску ввода номера телефона на странице 'оставить отзыв'", async({page}) => {
 	await test.step("Перейти на страницу 'Оставить отзыв'", async() => {
 		await headerPage.openFeedBack();
 	});
@@ -55,10 +55,13 @@ test("Маска ввода номера телефона на странице 
 	});
 });
 
-test("Удалить номер телефона на странице 'оставить отзыв'", async({page}) => {
+test("Проверить удаление номер телефона на странице 'оставить отзыв'", async({page}) => {
 	const phoneNumber = faker.phone.number().replace(/\D/g, '').slice(0, 10);
 	await test.step("Перейти на страницу 'Оставить отзыв'", async() => {
 		await headerPage.openFeedBack();
+	});
+	await test.step("Дождаться загрузки js-скрипта", async() => {
+		await page.waitForLoadState("load", { timeout: 5000 });
 	});
 	await test.step("Ввести в поле номер телефона 10 значный номер телефона" , async() => {
 		await feedBackPage.visitorPhoneInput.fill(phoneNumber);
@@ -66,9 +69,6 @@ test("Удалить номер телефона на странице 'оста
 	await test.step("Переместить курсор в конец поля ввода", async() => {
 		await feedBackPage.visitorPhoneInput.click();
 		await page.keyboard.press("End");
-	});
-	await test.step("Дождаться загрузки js-скрипта", async() => {
-		await page.waitForLoadState("load", { timeout: 5000 });
 	});
 	await test.step("Удалить номер телефона посимвольно", async() => {
 		const inputValue = await feedBackPage.visitorPhoneInput.inputValue();

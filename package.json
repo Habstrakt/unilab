@@ -11,14 +11,15 @@
   "description": "",
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
-    "@playwright/test": "^1.49.0",
+    "@playwright/test": "^1.50.1",
     "@types/node": "^20.14.7",
     "allure-commandline": "^2.30.0",
     "allure-playwright": "^3.0.6"
   },
   "dependencies": {
     "axios": "^1.7.3",
-    "csv-parse": "^5.5.6",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "fingerprint-generator": "^2.1.66",
+    "fingerprint-injector": "^2.1.66"
   }
 }

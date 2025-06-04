@@ -49,7 +49,7 @@ export class HeaderPage extends BasePage {
 		this.cartLink = page.locator(".header__cart-link");
 		this.searchResultList = page.locator(".search-result__list");
 		this.searchResult = page.locator(".header__search-result");
-
+		this.headerSearchResultItem = page.locator(".search-result__item");
 		this.analysisLink = page.locator("#navbarScroll").getByRole("link", { name: "Анализы" });
 		this.medicalServicesLink = page.locator("#navbarScroll").getByRole("link", { name: "Мед. услуги" });
 		this.onlineRecordLink = page.locator("#navbarScroll").getByRole("link", {name: "Онлайн-запись"});

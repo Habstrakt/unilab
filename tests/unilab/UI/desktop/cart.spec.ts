@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { HeaderPage } from "../../../../pages/header.page";
 import { CartPage } from '../../../../pages/cart.page';
-import { CollectionPage } from '../../../../pages/сollection.page';
+import { CollectionPage } from '../../../../pages/collection.page';
 
 let headerPage: HeaderPage;
 let cartPage: CartPage;
@@ -14,7 +14,7 @@ test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Удалить услугу в корзине", async() => {
+test("Проверить удаление услуги в корзине", async() => {
   await test.step("Перейти в раздел медицинских услуг", async() => {
     await headerPage.medicalServicesLink.click();
   });
@@ -30,7 +30,7 @@ test("Удалить услугу в корзине", async() => {
   });
 });
 
-test("Удалить мед. услугу в корзине", async() => {
+test("Проверить удаление мед. услуги в корзине", async() => {
   await test.step("Перейти в раздел анализов", async() => {
     await headerPage.analysisLink.click();
   });
@@ -46,7 +46,7 @@ test("Удалить мед. услугу в корзине", async() => {
   });
 });
 
-test("Кнопка очистить корзину", async() => {
+test("Проверить кнопку очистить корзину", async() => {
   await test.step("Перейти в раздел медицинских услуг", async() => {
     await headerPage.medicalServicesLink.click();
   });

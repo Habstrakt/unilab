@@ -1,17 +1,16 @@
 import { APIRequestContext, expect } from '@playwright/test';
 import { BaseAPI } from './base-api';
 import 'dotenv/config'
-import { fakerRU as faker } from '@faker-js/faker';
 
-const BASE_URL = process.env.URL;
+const BASE_URL = process.env['URL'];
 
 export class AuthAPI {
-  static async getToken(request: APIRequestContext) {
+  static async getToken(request: APIRequestContext): Promise<string> {
     const response = await request.post(`${BASE_URL}/users/authByEmail`, {
       data: {
-        email: process.env.EMAIL,
-        password: process.env.PASSWORD,
-        app_id: process.env.APP_ID
+        email: process.env['EMAIL'],
+        password: process.env['PASSWORD'],
+        app_id: process.env['APP_ID']
       }
     });
     expect(response.status()).toBe(200);
@@ -35,4 +34,3 @@ export class RegistrationAPI extends BaseAPI {
     });
   };
 };
-

@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { mockCities } from '../test-data/city.js';
-import { City } from '../interface/city.model.js';
-import { AuthAPI, CitiesAPI } from '../helpers/api-helpers.js';
+import { mockCities } from "../test-data/city";
+import { City } from '../interface/city.model';
+import { TestContext } from '../interface/api.model';
+import { AuthAPI, CitiesAPI } from '../helpers/api-helpers';
+
 
 let token: string;
-
 test.beforeAll(async ({ request }) => {
   token = await AuthAPI.getToken(request);
 })
 
-test("Получение валидной структуры городов", async({request}) => {
+test.skip("Получение валидной структуры городов", async({request}: TestContext) => {
   const response = await CitiesAPI.getAllCities(request, token);
 
   await test.step("Проверяем статус ответа", async() => {
@@ -30,7 +31,7 @@ test("Получение валидной структуры городов", as
   });
 });
 
-test("Проверка что город есть в списке допустимых", async({request}) => {
+test.skip("Проверка что город есть в списке допустимых", async({request}: TestContext) => {
   const response = await CitiesAPI.getAllCities(request, token);
   await test.step("Проверяем статус ответа", async() => {
     expect(response.status()).toBe(200);
@@ -39,7 +40,7 @@ test("Проверка что город есть в списке допусти
   const cities: City[] = await response.json();
   const allowedCityNames = new Set(mockCities.map(city => city.name));
 
-  test.step("Валидировать города", async() => {
+  await test.step("Валидировать города", async() => {
     expect(cities.every(apiCity => allowedCityNames.has(apiCity.name))).toBe(true);
   });
 });

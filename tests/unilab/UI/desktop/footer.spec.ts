@@ -8,7 +8,7 @@ test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Отображение всплывающего окна подписаться на новости и акции", async() => {
+test("Проверить отображение всплывающего окна подписаться на новости и акции", async() => {
 	await test.step("Нажать на кнопку 'Подписаться на новости и акции' в футере", async() => {
 		await expect(footerPage.subscribeBtn).toHaveText(/Подписаться на новости и акции/);
 		await footerPage.subscribeBtn.click();

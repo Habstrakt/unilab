@@ -1,7 +1,7 @@
 import { type Page, type Locator } from "@playwright/test";
 
 export class BasePage {
-  protected page: Page;
+  readonly page: Page;
   readonly btnNo: Locator;
   readonly btnYes:Locator;
   readonly closePopUpBtn: Locator;
@@ -36,10 +36,16 @@ export class BasePage {
 
   async clickRandomAddToCartButton(): Promise<string> {
     const btnCount = await this.addToCartButtons.count();
-    const randomIndex = Math.floor(Math.random() * btnCount);
+    const randomIndex: number = Math.floor(Math.random() * btnCount);
     const randomBtn = this.addToCartButtons.nth(randomIndex);
     const serviceName = await this.page.locator(".service-item__title-text").nth(randomIndex).textContent();
+
     await randomBtn.click();
-    return serviceName!;
+
+    if (!serviceName) {
+      throw new Error(`Не удалось получить название услуги по индексу ${randomIndex}`);
+    }
+
+    return serviceName;
   };
 };

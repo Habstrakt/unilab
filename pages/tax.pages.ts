@@ -31,7 +31,7 @@ export class TaxPage {
   readonly submitButton: Locator;
   readonly successMessage: Locator;
 
-  constructor(page: Page,) {
+  constructor(page: Page) {
     this.page = page;
     this.submitFormBtn = page.getByRole("button", {name: "Отправить заявление"});
 
@@ -63,6 +63,7 @@ export class TaxPage {
     this.consentCheckbox = page.locator("[customvaliditymessage='Вам нужно подтвердить ваше согласие']");
     this.submitButton = page.getByRole("button", {name: "Отправить заявление"});
     this.successMessage = page.getByRole("heading", { name: "Ваше заявление принято!" });
+    this.filialBtn = page.getByRole("button", {name: "филиал"});
   }
 
   async fillForm(data: {

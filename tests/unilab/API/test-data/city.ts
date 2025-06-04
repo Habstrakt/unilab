@@ -1,4 +1,6 @@
-export const mockCities = [
+import { City } from '../interface/city.model';
+
+export const mockCities: City[] = [
   {
     id: 77,
     uid: 'dd29cc57e9ea11e2ad6b1c7ee5191fe5',
@@ -377,4 +379,4 @@ export const mockCities = [
     record_cashing: true,
     parent_id: null
   }
-]
+];

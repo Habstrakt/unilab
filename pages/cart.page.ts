@@ -12,8 +12,8 @@ export class CartPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.deleteItemBtn = this.page.locator(".cart__item-delete");
-    this.title = this.page.locator("#cartDetail > div > div").nth(0);
+    this.deleteItemBtn = page.locator(".cart__item-delete");
+    this.title = page.locator("#cartDetail > div > div").nth(0);
     this.subTitle = page.locator("#cartDetail > div > div").nth(1);
     this.clearCartBtn = page.getByRole("button", {name: "Очистить корзину"});
     this.cartItemTitle = page.locator(".cart-item__title");

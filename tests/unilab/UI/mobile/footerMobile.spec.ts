@@ -16,7 +16,7 @@ test.beforeEach(async({page}) => {
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("Работа аккордеона в футтере в мобильной версии", async() => {
+test("Проверить работу аккордеона в футтере в мобильной версии", async() => {
 	let navItemsTitle: Locator[] = [];
 	let navItems: Locator;
 

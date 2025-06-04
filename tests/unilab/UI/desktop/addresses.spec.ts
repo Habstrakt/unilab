@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 import { HeaderPage } from '../../../../pages/header.page';
 import { BasePage } from '../../../../pages/base.page';
 import { AddressPage } from '../../../../pages/addresses.page';
@@ -7,14 +7,14 @@ let headerPage: HeaderPage;
 let basePage: BasePage;
 let addressPage: AddressPage;
 
-test.beforeEach(async({page}) => {
+test.beforeEach(async({page}: {page: Page}) => {
 	headerPage = new HeaderPage(page);
 	basePage = new BasePage(page);
 	addressPage = new AddressPage(page);
 	await page.goto("/", {waitUntil: "domcontentloaded"});
 });
 
-test("поле ввода даты формы на странице отзыва о филиале", async() => {
+test("Проверить поле ввода даты формы на странице отзыва о филиале", async() => {
 	await test.step("Согласится с выбором города", async() => {
 		await basePage.btnYes.click();
 	});
@@ -33,8 +33,7 @@ test("поле ввода даты формы на странице отзыва
 });
 
 
-test("Работа фильтра 'Приём врачей' на странице адресов", async({page}) => {
-	let initialAddressesCount: number;
+test("Проверить работу фильтра 'Приём врачей' на странице адресов", async({page}: {page: Page}) => {
 	await test.step("Согласится с выбором города", async() => {
 		await basePage.btnYes.click();
 	});
@@ -44,6 +43,7 @@ test("Работа фильтра 'Приём врачей' на страниц�
 	await test.step("Дождаться загрузки списка медицинских кабинетов", async() => {
 		await page.waitForSelector(".addresses__item");
 	});
+	let initialAddressesCount: number;
 	await test.step("Запомнить количество адресов до применения фильтра", async() => {
 		initialAddressesCount = await addressPage.getAddressesCount();
 	});
@@ -55,6 +55,6 @@ test("Работа фильтра 'Приём врачей' на страниц�
 	});
 	await test.step("Проверить, что количество адресов уменьшилось", async() => {
 		const filteredAddressesCount = await addressPage.getAddressesCount();
-		await expect(filteredAddressesCount).toBeLessThan(initialAddressesCount);
+		expect(filteredAddressesCount).toBeLessThan(initialAddressesCount);
 	});
 });

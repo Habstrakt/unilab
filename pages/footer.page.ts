@@ -1,7 +1,6 @@
 import { type Page, type Locator } from "@playwright/test";
 
 export class FooterPage {
-  protected page: Page;
   readonly subscribePopUp: Locator;
   readonly subscribeBtn: Locator;
   readonly subscribeInput: Locator;
