@@ -17,9 +17,7 @@
     "allure-playwright": "^3.0.6"
   },
   "dependencies": {
-    "axios": "^1.7.3",
-    "dotenv": "^16.4.5",
-    "fingerprint-generator": "^2.1.66",
-    "fingerprint-injector": "^2.1.66"
+    "axios": "^1.8.2",
+    "dotenv": "^16.4.5"
   }
 }
