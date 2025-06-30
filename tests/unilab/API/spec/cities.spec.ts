@@ -10,7 +10,7 @@ test.beforeAll(async ({ request }) => {
   token = await AuthAPI.getToken(request);
 })
 
-test.skip("Получение валидной структуры городов", async({request}: TestContext) => {
+test("Получение валидной структуры городов", async({request}: TestContext) => {
   const response = await CitiesAPI.getAllCities(request, token);
 
   await test.step("Проверяем статус ответа", async() => {
@@ -31,7 +31,7 @@ test.skip("Получение валидной структуры городов
   });
 });
 
-test.skip("Проверка что город есть в списке допустимых", async({request}: TestContext) => {
+test("Проверка что город есть в списке допустимых", async({request}: TestContext) => {
   const response = await CitiesAPI.getAllCities(request, token);
   await test.step("Проверяем статус ответа", async() => {
     expect(response.status()).toBe(200);

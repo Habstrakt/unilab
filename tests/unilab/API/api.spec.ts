@@ -27,7 +27,7 @@ test.skip("Проверка регистрации по Email (создание 
   });
 });
 
-test.skip("Проверка регистрации с пустой data", async({request}) => {
+test("Проверка регистрации с пустым телом", async({request}: TestContext) => {
   const response = await RegistrationAPI.registerByEmail(request, token, {data: {}});
   await test.step("Проверка статуса ответа", async() => {
     expect(response.status()).toBe(422);
@@ -109,7 +109,7 @@ test.skip("Проверка регистрации по Email (создание 
   });
 });
 
-test.skip("Проверка регистрации с некорректным Email", async({request}: TestContext) => {
+test.skip("Проверка регистрации с неверным форматом Email", async({request}: TestContext) => {
   const data: Data = {
     email: "test_gribanovunilab.su",
     password: faker.internet.password(),

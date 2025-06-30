@@ -1,4 +1,4 @@
-import { test, expect, Locator } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { TaxPage } from "../../../../pages/tax.pages";
 import {fakerRU as faker} from "@faker-js/faker";
 
@@ -27,7 +27,7 @@ test.beforeEach(async({page}) => {
 	});
 });
 
-test.only("Отправить заявление на получение справки", async() => {
+test("Отправить заявление на получение справки", async() => {
 	await test.step("Заполнить форму данными", async() => {
 		await taxPage.fillForm(testData());
 	});
